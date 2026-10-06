@@ -45,6 +45,11 @@ An intro card shows what a polyatomic ion is (a covalently bonded group of atoms
 
 The student is asked, one at a time, either to **tap the ion with a given name** or **tap the ion with a given formula**. They need **5 correct from names and 5 correct from formulas**. A wrong tap does not count, shows what they tapped and the right answer, and moves on to a new question. There is no restart, and misses are only tallied for information. Progress is saved on the device.
 
+## Completion code and turn-in
+When a student has finished every tab (all formulas found and named, the Tab 3 animation, three pairs found and named, and the polyatomic ion practice), a **🏅 Get my code** button appears and a name prompt opens automatically. After they enter their name they get a completion code and a **Turn it in** button that opens the class Google Form with the Name and Code questions already filled in. The code only appears when everything is complete.
+
+To point it at a different form, change `FORM_BASE` and `FORM_ENTRY` in `index.html`.
+
 ## Notes
 - Progress (the discovered formulas) is saved on the device.
 - Tabs 1–2 offer only single-charge ions, so every name follows "metal + nonmetal stem + -ide". Tabs 3–5 add the multi-charge metals and Roman numerals.

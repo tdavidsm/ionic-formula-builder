@@ -223,6 +223,16 @@
   .pi.cat .f{color:var(--cat)} .pi.an .f{color:var(--an)}
   .pi.right{border-color:var(--good);background:#143323} .pi.wrong{border-color:var(--bad);background:#3a1620} .pi.reveal{border-color:var(--good);box-shadow:0 0 14px rgba(47,191,87,.55)}
   .pi.right .n,.pi.reveal .n{color:#bff5d3}
+  .helpbtn{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer;touch-action:manipulation;font-family:inherit;font-weight:700}
+  .helpbtn:hover{border-color:var(--accent)}
+  a.btn{text-decoration:none;display:inline-block}
+  .modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:60;padding:18px}
+  .modal.show{display:flex}
+  .modalbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:460px;width:100%;padding:22px 24px;line-height:1.55;max-height:88vh;overflow:auto}
+  .modalbox h2{margin:0 0 6px;font-size:22px} .modalbox p{margin:6px 0;font-size:14.5px}
+  .field{width:100%;background:#0c1428;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:12px;font-size:16px;font-family:inherit}
+  .row2{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+  .code{font-size:40px;font-weight:900;letter-spacing:6px;text-align:center;color:var(--accent);margin:12px 0;font-family:ui-monospace,Menlo,Consolas,monospace}
   /* always-visible scroll strip (iPad hides its own scrollbar) */
   #scrollstrip{position:fixed;right:3px;top:8px;bottom:8px;width:18px;background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:9px;z-index:20;touch-action:none;display:none}
   #scrollthumb{position:absolute;left:0;right:0;top:0;min-height:48px;background:var(--accent);opacity:.75;border-radius:9px;touch-action:none}
@@ -236,6 +246,7 @@
   <h1>🧩 Ionic Formula Builder</h1>
   <span class="tag">build · balance · name</span>
   <span class="spacer"></span>
+  <button class="helpbtn" id="codeBtn" style="display:none">🏅 Get my code</button>
   <span class="pill" id="pill"></span>
 </header>
 <div class="wrap">
@@ -364,6 +375,20 @@
     </div>
   </div>
 </div>
+<div class="modal" id="nameModal"><div class="modalbox">
+  <h2>🎉 You finished everything!</h2>
+  <p>Type your first and last name to get your completion code.</p>
+  <input class="field" id="nameField" type="text" autocomplete="off" placeholder="First and last name">
+  <div id="nameErr" style="color:#ff8b9b;font-size:13px;min-height:1.2em;margin-top:6px"></div>
+  <div class="row2"><button class="btn secondary" id="nameCancel">Later</button><button class="btn" id="nameGo">Get my code</button></div>
+</div></div>
+<div class="modal" id="winModal"><div class="modalbox" style="text-align:center">
+  <h2>Nice work, <span id="winName"></span>!</h2>
+  <p>Your completion code:</p>
+  <div class="code" id="codeOut"></div>
+  <p class="muted" style="font-size:13px">Press <b>Turn it in</b> to open the class form with your name and code already filled in, then press Submit there. (Form won't open? Screenshot this page or copy the code.)</p>
+  <div class="row2" style="justify-content:center;flex-wrap:wrap"><a class="btn" id="turnIn" target="_blank" rel="noopener">Turn it in →</a><button class="btn secondary" id="copyBtn">Copy code</button><button class="btn secondary" id="winClose">Close</button></div>
+</div></div>
 <div id="scrollstrip"><div id="scrollthumb"></div></div>
 <div class="toast" id="toast"></div>
 <footer>Pieces are simplified on purpose: each tab is one unit of negative charge and each slot is one unit of positive charge.</footer>
@@ -408,7 +433,7 @@ const mName=m=>NAMES[m].toLowerCase(), aName=an=>STEM[an][0]+'ide';
 
 /* ======================= saved progress ======================= */
 const KEY='ionicformula.v1';
-let state={found:[],named:{},pairs:[],named2:{},introSeen:false,poly:{name:[],formula:[],missed:0}};
+let state={found:[],named:{},pairs:[],named2:{},introSeen:false,poly:{name:[],formula:[],missed:0},code:'',name:''};
 try{ const d=JSON.parse(localStorage.getItem(KEY)||'null'); if(d&&Array.isArray(d.found)) state=Object.assign(state,d); }catch(e){}
 const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} };
 let toastT=0;
@@ -427,7 +452,8 @@ function lockReason(n){
 let curTab=1;
 function renderTabs(){ $('#tabs').innerHTML=TABS.map((t,i)=>{ const n=i+1,lock=lockReason(n); return `<button class="tab ${t[2]===2?'g2':''} ${n===curTab?'sel':''} ${lock?'locked':''}" data-n="${n}"><div class="n">${t[0]}</div><div class="nm">${lock?'🔒 ':''}${t[1]}</div></button>`; }).join('');
   document.querySelectorAll('#tabs .tab').forEach(b=>b.onclick=()=>showTab(+b.dataset.n));
-  $('#pill').innerHTML=`Formulas <b>${Math.min(6,state.found.length)}/6</b> &nbsp;·&nbsp; Pairs <b>${Math.min(3,state.pairs.length)}/3</b> &nbsp;·&nbsp; Ions <b>${Math.min(5,PSt().name.length)+Math.min(5,PSt().formula.length)}/10</b>`; }
+  $('#pill').innerHTML=`Formulas <b>${Math.min(6,state.found.length)}/6</b> &nbsp;·&nbsp; Pairs <b>${Math.min(3,state.pairs.length)}/3</b> &nbsp;·&nbsp; Ions <b>${Math.min(5,PSt().name.length)+Math.min(5,PSt().formula.length)}/10</b>`;
+  $('#codeBtn').style.display=(typeof allDone==='function'&&allDone())?'':'none'; }
 function showTab(n){ const r=lockReason(n); if(r){ toast(r); return; } curTab=n;
   for(let i=1;i<=6;i++) $('#view'+i).style.display=i===n?'':'none';
   stopAllPlay(); renderTabs(); window.scrollTo(0,0);
@@ -832,10 +858,27 @@ function nextPoly(){ clearTimeout(PQ.tm); document.querySelectorAll('#piTable .p
   PQ.target=pool[Math.floor(Math.random()*pool.length)]; PQ.last=PQ.target; PQ.locked=false; $('#piFb').className='pi-fb'; $('#piFb').textContent='Find it in the table and tap it.'; polyPrompt(); }
 function polyTap(i,btn){ if(PQ.locked) return; const p=PSt(),x=POLY[PQ.target]; PQ.locked=true;
   if(i===PQ.target){ p[PQ.mode].push(i); save(); btn.classList.add('right'); $('#piFb').className='pi-fb good'; $('#piFb').textContent=`✓ Correct! ${x.f} is ${x.n}.`; polyMeters();
-    if(polyDone()){ PQ.tm=setTimeout(()=>{ polyPrompt(); },900); toast('🎉 Polyatomic ions page complete!'); } else PQ.tm=setTimeout(nextPoly,1100); }
+    if(polyDone()){ PQ.tm=setTimeout(()=>{ polyPrompt(); },900); toast('🎉 Polyatomic ions page complete!'); setTimeout(()=>{ if(!state.code) openName(); },1800); } else PQ.tm=setTimeout(nextPoly,1100); }
   else{ p.missed++; save(); btn.classList.add('wrong'); const t=document.querySelector(`#piTable .pi[data-i="${PQ.target}"]`); t.classList.add('reveal'); const y=POLY[i];
     $('#piFb').className='pi-fb bad'; $('#piFb').textContent=`Not quite. That one is ${y.f}, ${y.n}. The answer was ${x.f}, ${x.n}. Here comes a new one.`; polyMeters(); PQ.tm=setTimeout(nextPoly,2800); } }
 function showPoly(){ renderPolyTable(); polyMeters(); nextPoly(); }
+
+/* ======================= completion code + Google Form turn-in ======================= */
+const FORM_BASE='https://docs.google.com/forms/d/e/1FAIpQLSdi5CxV55tiO09mirEA4sgFDaPvG9vg7yMrQJ_0RFqGosXrLQ/viewform';
+const FORM_ENTRY={name:'entry.2072631698',code:'entry.1611661514'}; // the form's "Name" and "Code" questions
+function allDone(){ return state.found.length>=6&&state.found.every(f=>state.named[f.key])&&state.introSeen&&state.pairs.length>=3&&state.pairs.every(p=>p.items.every(c=>state.named2[c.key]))&&polyDone(); }
+function letter(c){ c=(c||'').toUpperCase(); return /[A-Z]/.test(c)?c:'X'; }
+function initials(name){ const p=name.trim().split(/\s+/).filter(Boolean); const a=letter((p[0]||'')[0]); const b=letter(p.length>1?(p[p.length-1]||'')[0]:((p[0]||'')[1]||(p[0]||'')[0])); return [a,b]; }
+function makeCode(name){ const [i1,i2]=initials(name); const cs='ABCDEFGHJKMNPQRSTUVWXYZ23456789'; const r=()=>cs[Math.floor(Math.random()*cs.length)]; return [r(),r(),i1,r(),r(),i2,r(),r()].join(''); }
+function turnInURL(){ const q=new URLSearchParams({usp:'pp_url'}); q.append(FORM_ENTRY.name,state.name||''); q.append(FORM_ENTRY.code,state.code||''); return FORM_BASE+'?'+q.toString(); }
+function openName(){ if(!allDone()) return; if(state.code){ showCode(); return; } $('#nameField').value=''; $('#nameErr').textContent=''; $('#nameModal').classList.add('show'); setTimeout(()=>$('#nameField').focus(),50); }
+function showCode(){ $('#turnIn').href=turnInURL(); $('#winName').textContent=(state.name||'').split(/\s+/)[0]; $('#codeOut').textContent=state.code; $('#nameModal').classList.remove('show'); $('#winModal').classList.add('show'); }
+$('#nameGo').onclick=()=>{ const name=$('#nameField').value.trim(); if(name.replace(/[^A-Za-z]/g,'').length<2){ $('#nameErr').textContent='Please enter your first and last name.'; return; }
+  state.name=name; state.code=makeCode(name); save(); showCode(); };
+$('#nameField').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#nameGo').click(); });
+$('#nameCancel').onclick=()=>$('#nameModal').classList.remove('show'); $('#winClose').onclick=()=>$('#winModal').classList.remove('show');
+$('#copyBtn').onclick=()=>{ try{ navigator.clipboard.writeText(state.code); $('#copyBtn').textContent='Copied ✓'; }catch(e){} };
+$('#codeBtn').onclick=openName;
 
 /* ======================= scroll strip + main loop ======================= */
 (function(){ const strip=$('#scrollstrip'),thumb=$('#scrollthumb'),de=document.documentElement; let drag=null;
