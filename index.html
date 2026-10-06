@@ -134,6 +134,23 @@
   .dots i{width:11px;height:11px;border-radius:50%;background:#2c3d6b;transition:.3s}
   .dots i.on{background:var(--accent);transform:scale(1.25)} .dots i.past{background:#8a7a40}
   .fly{position:fixed;z-index:50;pointer-events:none;display:flex;align-items:center;justify-content:center;font-weight:900;transform-origin:0 0;font-size:inherit}
+  .exnote{font-size:13px;color:var(--muted);margin:0 0 8px;line-height:1.45}
+  .exnote b{color:var(--accent)}
+  .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+  .pcard{background:#0c1428;border:2px solid var(--line);border-radius:14px;padding:12px 14px}
+  .pcard.done{border-color:var(--good);background:#10281d}
+  .pcard .pf{font-size:34px;font-weight:900;text-align:center;margin-bottom:8px;letter-spacing:1px}
+  .pcard .pf span.tick{color:#8ff0b6;font-size:24px;margin-left:8px}
+  .pcard .prow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .pcard label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:700}
+  .pcard input{display:block;width:100%;margin-top:4px;background:#0a1024;border:2px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 10px;font-size:17px;font-family:inherit;font-weight:600}
+  .pcard input:focus{outline:none;border-color:var(--accent)}
+  .pcard input.good{border-color:var(--good);background:#143323;color:#bff5d3}
+  .pcard input.bad{border-color:var(--bad);background:#3a1620}
+  .pcard .pwide{margin-top:8px}
+  .pcard .pact{display:flex;gap:10px;align-items:center;margin-top:10px}
+  .pcard .pfb{font-size:13px;line-height:1.45;margin-top:8px;color:var(--accent);min-height:1.4em}
+  .pcard .pfb.ok{color:#8ff0b6}
   .lockmsg{text-align:center;padding:30px 10px;color:var(--muted);font-size:16px;line-height:1.6}
 
   /* always-visible scroll strip (iPad hides its own scrollbar) */
@@ -194,8 +211,8 @@
   <!-- ===== TAB 2 ===== -->
   <div id="view2" style="display:none">
     <div class="card">
-      <h2>Name the formulas you discovered</h2>
-      <div class="chips" id="nmChips"></div>
+      <h2>Part 1 · Watch how a compound is named</h2>
+      <div class="exnote"><b>Example:</b> this is a compound you did <b>not</b> build. Step through it to see how its name is made.</div>
       <div class="nstage" id="nstage">
         <div class="nlab">Formula</div>
         <div class="fRow" id="fRow"><span class="part pc" id="pCat"></span><span class="part pc ps" id="pCatSub"></span><span class="part pa" id="pAn"></span><span class="part pa ps" id="pAnSub"></span></div>
@@ -210,11 +227,15 @@
         <button class="btn" id="nmPlay">▶ Play</button>
         <button class="btn secondary" id="nmNext">Next ▶</button>
         <button class="btn secondary" id="nmReplay">↺ Replay</button>
+        <button class="btn secondary" id="nmOther">Show a different example</button>
       </div>
+      <div style="margin-top:14px;font-size:16px;line-height:1.7;text-align:center"><span style="color:var(--cat);font-weight:800">metal's name</span> + <span style="color:var(--an);font-weight:800">nonmetal's name</span> with its ending <span style="color:#ff8b9b;font-weight:800">dropped</span> and <span style="color:var(--accent);font-weight:800">-ide</span> added</div>
     </div>
-    <div class="card"><h2>The naming pattern</h2>
-      <div style="font-size:16px;line-height:1.7"><span style="color:var(--cat);font-weight:800">metal's name</span> + <span style="color:var(--an);font-weight:800">nonmetal's name</span> with its ending <span style="color:#ff8b9b;font-weight:800">dropped</span> and <span style="color:var(--accent);font-weight:800">-ide</span> added</div>
-      <div class="hint">This works for every compound you built because each metal you could pick has only one possible charge.</div>
+    <div class="card">
+      <h2>Part 2 · Your turn: name the compounds you discovered <span id="namedCount" style="color:var(--accent)"></span></h2>
+      <div class="exnote">Type the <b>metal's name</b>, then the <b>nonmetal's name</b> (with the <b>-ide</b> ending), and then the whole <b>compound name</b>. Press <b>Check</b> to see how you did.</div>
+      <div class="pgrid" id="practice"></div>
+      <div class="status" id="allNamed" style="text-align:center;font-size:17px"></div>
     </div>
   </div>
 </div>
@@ -393,19 +414,23 @@ function renderFound(){ const n=state.found.length; $('#foundCount').textContent
   const open=n>=6; $('#tab2').classList.toggle('locked',!open); $('#tab2nm').textContent=(open?'':'🔒 ')+'Name Them'; }
 
 /* ======================= naming tab ======================= */
-const N={i:0,step:0,timer:null,seen:{},tm:null};
+const N={ex:null,step:0,timer:null,tm:null};
 const STEPS=6;
-function nmData(){ return state.found[N.i]; }
-function nmChips(){ $('#nmChips').innerHTML=state.found.map((f,i)=>`<button class="chip ${i===N.i?'on':''} ${N.seen[f.key]?'seen':''}" data-i="${i}">${f.disp}</button>`).join('');
-  document.querySelectorAll('#nmChips .chip').forEach(c=>c.onclick=()=>{ N.i=+c.dataset.i; nmReset(); }); }
-function nmReset(){ stopPlay(); N.step=0; nmFill(); nmApply(0,false); nmChips(); }
+const EXAMPLES=[['Na','Cl'],['K','Br'],['Li','F'],['Mg','O'],['Ca','S'],['Ba','I'],['Al','N'],['Zn','S'],['Ag','Cl'],['Sr','F'],['Cs','I'],['Be','O'],['Ga','P'],['Rb','Se'],['Al','S'],['Ca','Cl'],['K','O']];
+function mkEx(c,a){ const cq=CAT[c],aq=AN[a],l=cq*aq/gcd(cq,aq),fc=l/cq,fa=l/aq; return {cat:c,an:a,fc,fa,disp:c+sub(fc)+a+sub(fa),key:c+fc+a+fa}; }
+function nextExample(){ const isNew=e=>!state.found.some(f=>f.key===e.key)&&(!N.ex||e.key!==N.ex.key);
+  let pool=EXAMPLES.map(([c,a])=>mkEx(c,a)).filter(isNew);
+  if(!pool.length) pool=Object.keys(CAT).flatMap(c=>Object.keys(AN).map(a=>mkEx(c,a))).filter(isNew);
+  N.ex=pool[Math.floor(Math.random()*pool.length)]||N.ex; }
+const nmData=()=>N.ex;
+function nmReset(){ stopPlay(); N.step=0; N.prevStep=0; nmFill(); nmApply(0,false); }
 function nmFill(){ const f=nmData(); if(!f) return; const [stem,end]=STEM[f.an];
   $('#pCat').textContent=f.cat; $('#pCatSub').textContent=f.fc>1?sub(f.fc):''; $('#pAn').textContent=f.an; $('#pAnSub').textContent=f.fa>1?sub(f.fa):'';
   $('#pCatSub').style.display=f.fc>1?'':'none'; $('#pAnSub').style.display=f.fa>1?'':'none';
   $('#nCat').textContent=NAMES[f.cat].toLowerCase(); $('#nStem').textContent=stem; $('#nEnd').textContent=end; }
 function caption(step,f){ const [stem,end]=STEM[f.an],cn=NAMES[f.cat].toLowerCase(),an=NAMES[f.an].toLowerCase(),subs=f.fc>1||f.fa>1;
   return [
-   `Here is the formula you discovered: <b>${f.disp}</b>. Let's build its name one piece at a time.`,
+   `Here is a compound you did not build: <b>${f.disp}</b>. Let's build its name one piece at a time.`,
    `<b>Step 1:</b> Name the metal first. <span class="c1">${f.cat}</span> is <span class="c1">${cn}</span>. Write the metal's name exactly as it is.`,
    `<b>Step 2:</b> Now the nonmetal. <span class="c2">${f.an}</span> is <span class="c2">${an}</span>.`,
    `<b>Step 3:</b> Drop the ending of the nonmetal's name: take the <span class="cr">-${end}</span> off ${an}, and <span class="c2">${stem}</span> is left.`,
@@ -430,7 +455,7 @@ function nmApply(step,animate){ const f=nmData(); if(!f) return; const hl=(id,on
   $('#nmDots').innerHTML=Array.from({length:STEPS},(_,i)=>`<i class="${i===step?'on':i<step?'past':''}"></i>`).join('');
   $('#nmBack').disabled=step===0; $('#nmNext').disabled=step===STEPS-1;
   $('#nmPlay').textContent=N.timer?'⏸ Pause':(step===STEPS-1?'▶ Play again':'▶ Play');
-  N.prevStep=step; if(step===STEPS-1){ N.seen[f.key]=true; nmChips(); } }
+  N.prevStep=step; }
 function fly(from,to,text,color,cb){ if(!from.animate){ cb&&cb(); return; } const a=from.getBoundingClientRect(),b=to.getBoundingClientRect(); const d=document.createElement('div');
   d.className='fly'; d.textContent=text; d.style.cssText=`left:${a.left}px;top:${a.top}px;width:${a.width}px;height:${a.height}px;color:${color};font-size:${getComputedStyle(from).fontSize}`;
   document.body.appendChild(d); const s=b.width/Math.max(1,a.width);
@@ -446,8 +471,40 @@ $('#nmBack').onclick=()=>{ stopPlay(); go(N.step-1,false); };
 $('#nmNext').onclick=()=>{ stopPlay(); go(N.step+1,true); };
 $('#nmReplay').onclick=()=>{ stopPlay(); N.prevStep=0; go(0,false); nmApply(0,false); };
 $('#nmPlay').onclick=play;
-function showNaming(){ const open=state.found.length>=6; const v=$('#view2');
-  if(!open){ return; } N.i=Math.min(N.i,state.found.length-1); nmChips(); nmFill(); N.prevStep=0; go(0,false); }
+function showNaming(){ if(state.found.length<6) return; if(!N.ex) nextExample(); nmReset(); renderPractice(); }
+$('#nmOther').onclick=()=>{ nextExample(); nmReset(); };
+
+/* ---- typed practice: metal / nonmetal / compound boxes with checking ---- */
+const ALT={aluminum:'aluminium',cesium:'caesium',sulfide:'sulphide'};
+const norm=t=>t.trim().toLowerCase().replace(/\s+/g,' ');
+function same(val,exp){ const v=norm(val); if(v===exp) return true; let e2=exp; for(const k in ALT) e2=e2.split(k).join(ALT[k]); return v===e2; }
+const named=()=>(state.named=state.named||{});
+const tries={};
+const ATTR='autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"';
+function cardHTML(f){ const done=!!named()[f.key],m=NAMES[f.cat].toLowerCase(),n=STEM[f.an][0]+'ide';
+  return `<div class="pcard ${done?'done':''}" data-k="${f.key}"><div class="pf">${f.disp}${done?'<span class="tick">✓</span>':''}</div>
+    <div class="prow"><label>Metal Name<input data-f="m" value="${done?m:''}" ${done?'readonly':''} ${ATTR}></label>
+    <label>Nonmetal Name<input data-f="n" value="${done?n:''}" ${done?'readonly':''} ${ATTR}></label></div>
+    <label class="pwide">Compound Name<input data-f="c" value="${done?m+' '+n:''}" ${done?'readonly':''} ${ATTR}></label>
+    <div class="pact">${done?'':'<button class="btn">Check</button>'}</div><div class="pfb ${done?'ok':''}">${done?'✓ Correct! '+m+' '+n:''}</div></div>`; }
+function wireCard(card){ if(card.classList.contains('done')) return; const chk=()=>checkCard(card); card.querySelector('.btn').onclick=chk;
+  card.querySelectorAll('input').forEach(i=>i.addEventListener('keydown',e=>{ if(e.key==='Enter') chk(); })); }
+function updateNamed(){ const list=state.found,n=list.filter(f=>named()[f.key]).length; $('#namedCount').textContent=`(${n}/${list.length} named)`;
+  $('#allNamed').textContent=n===list.length&&n>0?'🎉 You named every compound you discovered!':''; }
+function renderPractice(){ $('#practice').innerHTML=state.found.map(cardHTML).join(''); $('#practice').querySelectorAll('.pcard').forEach(wireCard); updateNamed(); }
+function peek(word,k){ return `It starts with “${word.slice(0,Math.min(word.length-1,2+k))}…”.`; }
+function checkCard(card){ const f=state.found.find(x=>x.key===card.dataset.k); const t=tries[f.key]=(tries[f.key]||0)+1; const [stem,end]=STEM[f.an];
+  const m=NAMES[f.cat].toLowerCase(),n=stem+'ide',c=m+' '+n; const inp={}; card.querySelectorAll('input').forEach(i=>inp[i.dataset.f]=i);
+  const fb=[]; const mark=(i,ok)=>{ i.classList.toggle('good',ok); i.classList.toggle('bad',!ok); };
+  const vm=norm(inp.m.value),vn=norm(inp.n.value),vc=norm(inp.c.value);
+  const okM=same(inp.m.value,m),okN=same(inp.n.value,n),okC=same(inp.c.value,c);
+  mark(inp.m,okM); mark(inp.n,okN); mark(inp.c,okC);
+  if(!okM){ if(!vm) fb.push('Type the metal\'s name.'); else if(vm===f.cat.toLowerCase()) fb.push('Write the metal\'s full name, not its symbol.'); else fb.push(`The metal is ${f.cat}. Write its name exactly as the periodic table does.${t>2?' '+peek(m,t-3):''}`); }
+  if(!okN){ if(!vn) fb.push('Type the nonmetal\'s name with the -ide ending.'); else if(vn===NAMES[f.an].toLowerCase()) fb.push('That is the element\'s name. Drop its ending and add -ide.'); else if(vn===stem) fb.push('Almost! Don\'t forget the -ide ending.'); else if(vn===f.an.toLowerCase()) fb.push('Write the full name, not the symbol.'); else fb.push(`The nonmetal is ${f.an}. Take its name, drop the ending, and add -ide.${t>2?' '+peek(n,t-3):''}`); }
+  if(!okC){ if(!vc) fb.push('Type the whole compound name.'); else if(okM&&okN) fb.push('Put the metal name first, then the nonmetal name, with a space between.'); else fb.push('Fix the two boxes above first, then combine them: metal name, space, nonmetal name.'); }
+  const fbEl=card.querySelector('.pfb');
+  if(okM&&okN&&okC){ named()[f.key]=true; save(); const t=document.createElement('div'); t.innerHTML=cardHTML(f); const nc=t.firstElementChild; card.replaceWith(nc); updateNamed(); toast('✓ '+f.disp+' is '+c); return; }
+  fbEl.className='pfb'; fbEl.innerHTML=fb.map(x=>'• '+x).join('<br>'); }
 
 /* ======================= tabs + scroll strip ======================= */
 function showTab(n){ if(n===2&&state.found.length<6){ toast(`Find six formulas in Tab 1 first (${state.found.length}/6).`); return; }

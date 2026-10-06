@@ -14,7 +14,7 @@ Students discover how to write ionic formulas by assembling jigsaw-style ion pie
 - Students must discover **six different formulas** to unlock Tab 2.
 
 ## Tab 2: Name Them
-Uses only the formulas the student actually discovered. A step-by-step animation highlights the part of the formula that supplies each part of the name:
+**Part 1: a worked example the student did not build.** A step-by-step animation highlights the part of the formula that supplies each part of the name:
 
 1. The metal is named first (`Mg` → *magnesium*)
 2. The nonmetal is named (`Cl` → *chlorine*)
@@ -22,7 +22,9 @@ Uses only the formulas the student actually discovered. A step-by-step animation
 4. **-ide** is added (*chloride*)
 5. The names are combined (*magnesium chloride*) and the subscripts are highlighted as **not** part of the name
 
-Controls: Back, Play (auto-advance), Next, Replay.
+Controls: Back, Play (auto-advance), Next, Replay, and **Show a different example** (always a compound the student has not found).
+
+**Part 2: their turn.** Each formula the student discovered gets a card with a stack of boxes: **Metal Name** and **Nonmetal Name** (with the -ide ending) on one row, and the **Compound Name** below. **Check** marks each box green or red and gives a targeted hint (symbol instead of name, forgot -ide, wrong order, and so on; the hints get more specific after a few tries). Correct cards lock with a ✓, and progress is saved on the device. Alternate spellings (aluminium, caesium, sulphide) are accepted.
 
 ## Notes
 - Progress (the discovered formulas) is saved on the device.
