@@ -10,7 +10,7 @@
     --bg:#0f1830; --panel:#16213e; --panel2:#1d2b52; --ink:#eaf0ff;
     --muted:#9fb0d6; --line:#2c3d6b; --accent:#ffd166;
     --good:#2fbf57; --bad:#e6294b;
-    --cat:#ffb066; --catd:#e07a1a; --an:#5be0a0; --and:#1f9e7b; --off:#3a4560;
+    --cat:#ffb066; --catd:#e07a1a; --an:#5be0a0; --and:#1f9e7b; --off:#3a4560; --rom:#c3a1ff;
   }
   *{box-sizing:border-box}
   html,body{margin:0;min-height:100%}
@@ -26,14 +26,17 @@
   .pill b{color:var(--accent);font-variant-numeric:tabular-nums}
   .wrap{max-width:1180px;margin:0 auto;padding:12px 14px 30px}
 
-  .tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-  .tab{text-align:left;background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:9px 14px;cursor:pointer;
-    color:var(--ink);font:inherit;touch-action:manipulation}
+  .tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}
+  .tab{text-align:left;background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:8px 11px;cursor:pointer;
+    color:var(--ink);font:inherit;touch-action:manipulation;min-width:0}
   .tab:hover{border-color:#3a4d7d}
   .tab.sel{border-color:var(--accent);background:#20315c}
   .tab.locked{opacity:.55}
-  .tab .n{font-size:11px;text-transform:uppercase;letter-spacing:.6px;font-weight:700;color:var(--accent)}
-  .tab .nm{font-weight:700;font-size:15px;margin-top:2px}
+  .tab .n{font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;font-weight:700;color:var(--accent)}
+  .tab.g2 .n{color:var(--rom)}
+  .tab .nm{font-weight:700;font-size:14px;margin-top:2px;line-height:1.2}
+  @media (max-width:900px){ .tabs{grid-template-columns:repeat(3,1fr)} }
+  @media (max-width:560px){ .tabs{grid-template-columns:repeat(2,1fr)} .tab .nm{font-size:13px} }
 
   .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px;min-width:0}
   .card h2{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin:0 0 8px}
@@ -41,20 +44,21 @@
   .hint{font-size:13px;color:var(--muted);line-height:1.45}
 
   /* ---------- periodic table ---------- */
-  #ptwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  #ptinner{min-width:780px;position:relative}
+  .ptwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .ptinner{min-width:780px;position:relative}
   .gh{display:grid;grid-template-columns:repeat(18,minmax(0,1fr));text-align:center}
   .gh div{font-size:10px;color:var(--muted);line-height:1.25;padding:1px 0}
   .gh .gn{font-size:10px;opacity:.7}
   .gh .gc{font-size:clamp(12px,1.7vw,17px);font-weight:800;font-variant-numeric:tabular-nums}
   .gh .gc.pos{color:var(--cat)} .gh .gc.neg{color:var(--an)} .gh .gc.var{color:#7b88a8;font-size:11px;font-weight:700}
   .gh .fam{font-size:9.5px;min-height:1.3em}
-  #ptgrid{display:grid;grid-template-columns:repeat(18,minmax(0,1fr));position:relative}
+  .ptgrid{display:grid;grid-template-columns:repeat(18,minmax(0,1fr));position:relative}
   .el{aspect-ratio:1/1;margin:1.5px;border-radius:7px;position:relative;display:flex;align-items:center;justify-content:center;
     border:1.5px solid transparent;font:inherit;color:var(--ink);padding:0;min-width:0}
   .el b{font-size:clamp(11px,1.9vw,19px);font-weight:800}
   .el i{position:absolute;left:3px;top:1px;font-size:clamp(7px,.9vw,9px);font-style:normal;opacity:.75}
   .el u{position:absolute;right:3px;top:1px;font-size:clamp(8px,1.05vw,11px);text-decoration:none;font-weight:800}
+  .el.multi u{font-size:clamp(6.5px,.85vw,9px);right:2px}
   button.el{cursor:pointer;touch-action:manipulation;transition:transform .08s}
   button.el:active{transform:scale(.92)}
   .el.cat{background:linear-gradient(160deg,#6b4220,#4a2d14);border-color:#b8742f} .el.cat u{color:var(--cat)} .el.cat:hover{border-color:var(--cat)}
@@ -65,10 +69,9 @@
   .el.ph{background:#171d30;border:1.5px dashed #2a3350;color:#566280;font-size:clamp(7px,.95vw,10px);text-align:center;line-height:1.1}
   .legend{grid-column:3/13;grid-row:1/4;margin:4px 10px;display:flex;flex-direction:column;justify-content:center;gap:5px;font-size:12px;color:var(--muted);line-height:1.35}
   .legend span.sw{display:inline-block;width:13px;height:13px;border-radius:4px;vertical-align:-2px;margin-right:6px;border:1.5px solid}
-  #stairs{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
-  #stairs path{fill:none;stroke:#ffd166;stroke-width:3.2;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke;
+  .stairs{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+  .stairs path{fill:none;stroke:#ffd166;stroke-width:3.2;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke;
     filter:drop-shadow(0 0 4px rgba(255,209,102,.55))}
-  .metlab{position:absolute;font-size:10.5px;font-weight:800;letter-spacing:.8px;color:var(--accent);pointer-events:none;text-shadow:0 1px 3px #000}
 
   /* ---------- workshop ---------- */
   .wtop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:8px}
@@ -81,9 +84,12 @@
   .net.zero{border-color:var(--good)} .net.zero .val{color:#8ff0b6}
   .net.idle .val{color:#5d6985}
   .stagewrap{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0a1024}
-  canvas#bench{display:block;width:100%;height:auto;aspect-ratio:1000/400;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:grab}
-  canvas#bench.grabbing{cursor:grabbing}
+  canvas.bench{display:block;width:100%;height:auto;aspect-ratio:1000/400;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:grab}
+  canvas.bench.grabbing{cursor:grabbing}
   .status{font-size:14px;margin:10px 0 2px;min-height:2.6em;color:var(--accent);font-weight:600;line-height:1.4}
+  .note2{font-size:14px;margin:8px 0 0;color:var(--rom);font-weight:700;line-height:1.4}
+  .chooser{display:none;background:#0c1428;border:2px solid var(--accent);border-radius:12px;padding:10px 14px;margin:0 0 10px;align-items:center;gap:10px;flex-wrap:wrap;font-size:15px}
+  .chooser.show{display:flex}
   .rowbtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
   .btn{border:none;border-radius:12px;padding:12px 16px;font-size:15px;font-weight:800;cursor:pointer;color:#0f1830;background:var(--accent);
     touch-action:manipulation;user-select:none;-webkit-user-select:none;font-family:inherit}
@@ -93,28 +99,26 @@
   .btn.secondary:hover{border-color:var(--accent);filter:none}
   .btn:disabled{opacity:.4;cursor:not-allowed;filter:none}
   .found{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:6px}
-  @media (max-width:760px){ .found{grid-template-columns:repeat(3,1fr)} }
-  .slot{background:#0c1428;border:2px dashed var(--line);border-radius:12px;min-height:62px;display:flex;align-items:center;justify-content:center;
-    font-size:22px;font-weight:800;color:#44506f}
+  .found.three{grid-template-columns:repeat(3,1fr)}
+  @media (max-width:760px){ .found{grid-template-columns:repeat(3,1fr)} .found.three{grid-template-columns:1fr} }
+  .slot{background:#0c1428;border:2px dashed var(--line);border-radius:12px;min-height:62px;display:flex;align-items:center;justify-content:center;flex-direction:column;
+    font-size:22px;font-weight:800;color:#44506f;text-align:center;line-height:1.3;padding:4px}
   .slot.on{border:2px solid var(--good);background:#143323;color:#bff5d3;animation:pop .45s ease}
+  .slot small{font-size:12px;color:#8ff0b6;font-weight:700}
   @keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
   .toast{position:fixed;left:50%;top:14px;transform:translateX(-50%);background:rgba(10,17,36,.97);border:1px solid var(--good);color:#bff5d3;
     border-radius:12px;padding:10px 18px;font-weight:700;font-size:15px;display:none;box-shadow:0 8px 24px #0009;z-index:40;text-align:center;max-width:92%}
   .toast.show{display:block}
 
-  /* ---------- naming ---------- */
-  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 10px}
-  .chip{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:8px 14px;font-size:18px;font-weight:800;cursor:pointer;touch-action:manipulation;font-family:inherit}
-  .chip:hover{border-color:var(--accent)} .chip.on{border-color:var(--accent);background:#2a3d72;color:var(--accent)}
-  .chip.seen::after{content:" ✓";color:#8ff0b6;font-size:14px}
-  .nstage{background:#0a1024;border:1px solid var(--line);border-radius:14px;padding:22px 14px 16px;text-align:center;position:relative;overflow:hidden}
+  /* ---------- animation stage (naming + intro) ---------- */
+  .nstage{background:#0a1024;border:1px solid var(--line);border-radius:14px;padding:20px 14px 16px;text-align:center;position:relative;overflow:hidden}
   .nlab{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:6px}
   .fRow{font-size:clamp(40px,8vw,76px);font-weight:900;line-height:1.15;letter-spacing:1px;display:flex;justify-content:center;align-items:baseline;flex-wrap:wrap}
   .part{display:inline-block;padding:0 10px;border-radius:14px;border:3px solid transparent;transition:all .35s;color:#cfdcf7}
-  .part.pc{color:var(--cat)} .part.pa{color:var(--an)} .part.ps{color:#c3a1ff;font-size:.5em;padding:0 4px;align-self:flex-end;transform:translateY(.15em)}
+  .part.pc{color:var(--cat)} .part.pa{color:var(--an)} .part.ps{color:var(--rom);font-size:.5em;padding:0 4px;align-self:flex-end;transform:translateY(.15em)}
   .part.hl.pc{background:rgba(255,176,102,.18);border-color:var(--cat);transform:scale(1.08);box-shadow:0 0 22px rgba(255,176,102,.45)}
   .part.hl.pa{background:rgba(91,224,160,.16);border-color:var(--an);transform:scale(1.08);box-shadow:0 0 22px rgba(91,224,160,.4)}
-  .part.hl.ps{background:rgba(195,161,255,.16);border-color:#c3a1ff;box-shadow:0 0 18px rgba(195,161,255,.4)}
+  .part.hl.ps{background:rgba(195,161,255,.16);border-color:var(--rom);box-shadow:0 0 18px rgba(195,161,255,.4)}
   .part.dim{opacity:.38}
   .arrowrow{font-size:26px;color:#44506f;margin:2px 0 2px;height:34px}
   .nRow{font-size:clamp(28px,5.6vw,52px);font-weight:800;min-height:1.4em;display:flex;justify-content:center;align-items:baseline;flex-wrap:wrap;gap:.35em}
@@ -128,20 +132,61 @@
   .nw .ide.vis{max-width:2em;opacity:1}
   .nRow.done .nw{text-shadow:0 0 18px rgba(255,209,102,.5)}
   .nRow.done .nw .ide{color:inherit}
-  .cap{font-size:clamp(15px,2.2vw,19px);line-height:1.5;margin:14px auto 0;max-width:760px;min-height:4.6em}
-  .cap b{color:var(--accent)} .cap .c1{color:var(--cat);font-weight:800} .cap .c2{color:var(--an);font-weight:800} .cap .c3{color:#c3a1ff;font-weight:800} .cap .cr{color:#ff8b9b;font-weight:800}
+  .cap{font-size:clamp(15px,2.2vw,19px);line-height:1.5;margin:14px auto 0;max-width:780px;min-height:4.6em}
+  .cap b{color:var(--accent)} .cap .c1{color:var(--cat);font-weight:800} .cap .c2{color:var(--an);font-weight:800} .cap .c3{color:var(--rom);font-weight:800} .cap .cr{color:#ff8b9b;font-weight:800}
   .dots{display:flex;gap:7px;justify-content:center;margin-top:8px}
   .dots i{width:11px;height:11px;border-radius:50%;background:#2c3d6b;transition:.3s}
   .dots i.on{background:var(--accent);transform:scale(1.25)} .dots i.past{background:#8a7a40}
-  .fly{position:fixed;z-index:50;pointer-events:none;display:flex;align-items:center;justify-content:center;font-weight:900;transform-origin:0 0;font-size:inherit}
+  .fly{position:fixed;z-index:50;pointer-events:none;display:flex;align-items:center;justify-content:center;font-weight:900;transform-origin:0 0}
   .exnote{font-size:13px;color:var(--muted);margin:0 0 8px;line-height:1.45}
   .exnote b{color:var(--accent)}
+  .pnote{margin-top:14px;font-size:16px;line-height:1.7;text-align:center}
+
+  /* intro / roman lanes */
+  .mlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin:6px 0 12px}
+  .mi{background:#0c1428;border:1px solid var(--line);border-radius:10px;padding:6px 10px;display:flex;gap:8px;align-items:baseline;transition:.3s}
+  .mi b{font-size:19px;color:var(--cat)} .mi span{font-size:12.5px;color:var(--muted);font-weight:700}
+  .mlist.hl .mi{border-color:var(--cat);box-shadow:0 0 12px rgba(255,176,102,.25)}
+  .irow{display:flex;align-items:center;justify-content:center;gap:16px;font-size:clamp(40px,7vw,64px);font-weight:900;opacity:0;transition:opacity .5s;min-height:1.2em;margin-bottom:6px}
+  .irow.vis{opacity:1} .irow .m{color:var(--cat)} .irow .a{color:var(--an)} .irow .pl{color:#6b78a0;font-size:.6em}
+  .lanes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media (max-width:700px){ .lanes{grid-template-columns:1fr} }
+  .lane{background:#0c1428;border:2px solid var(--line);border-radius:14px;padding:12px 8px;opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s;min-height:120px}
+  .lane.vis{opacity:1;transform:none}
+  .lane .lt{font-size:12px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:6px}
+  .ions{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;min-height:40px;margin-bottom:6px}
+  .ion{padding:5px 10px;border-radius:10px;font-weight:800;font-size:18px;color:#10213a;display:inline-block}
+  .ion.c{background:linear-gradient(160deg,#ffc789,#e0801f)} .ion.a{background:linear-gradient(160deg,#8cf0c4,#22a37d)}
+  .lform{font-size:clamp(30px,5vw,50px);font-weight:900;text-align:center;line-height:1.2}
+  .lform .fc{color:var(--cat);display:inline-block;border:3px solid transparent;border-radius:10px;padding:0 6px;transition:.3s}
+  .lform .fa{color:var(--an);display:inline-block;border:3px solid transparent;border-radius:10px;padding:0 6px;transition:.3s}
+  .lform .hl.fc{background:rgba(255,176,102,.18);border-color:var(--cat)} .lform .hl.fa{background:rgba(91,224,160,.16);border-color:var(--an)}
+  .lname{font-size:clamp(20px,3.3vw,32px);font-weight:800;text-align:center;min-height:1.5em;margin-top:6px}
+  .lname .w1{color:var(--cat)} .lname .w2{color:var(--an)} .qmark{color:#ff8b9b;font-weight:900}
+  .rom{display:inline-block;color:var(--rom);opacity:0;transform:scale(.5);transition:opacity .4s,transform .4s}
+  .rom.vis{opacity:1;transform:none}
+  .wd{opacity:0;transition:opacity .4s;display:inline-block} .wd.vis{opacity:1}
+  .lg{font-size:14px;line-height:1.4;text-align:center;opacity:0;max-height:0;overflow:hidden;transition:opacity .4s,max-height .4s;color:#cfdcf7}
+  .lg.vis{opacity:1;max-height:3.6em;margin:4px 0}
+  .lg b{color:var(--rom)}
+  .lanes.final .lname{text-shadow:0 0 16px rgba(255,209,102,.45)}
+  .rrow{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+  .rn{background:#0c1428;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-weight:800;font-size:16px;color:#cfdcf7;transition:.3s;text-align:center;min-width:44px}
+  .rn small{display:block;font-size:11px;color:var(--muted);font-weight:700}
+  .rn.hl{border-color:var(--rom);background:rgba(195,161,255,.15);color:var(--rom);transform:scale(1.1)}
+
+  /* typed practice cards */
   .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+  .pair{background:#0e1630;border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:12px}
+  .pair .ptitle{font-size:13px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin:0 4px 8px;font-weight:700}
+  .pair .pgrid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media (max-width:760px){ .pair .pgrid2{grid-template-columns:1fr} }
   .pcard{background:#0c1428;border:2px solid var(--line);border-radius:14px;padding:12px 14px}
   .pcard.done{border-color:var(--good);background:#10281d}
   .pcard .pf{font-size:34px;font-weight:900;text-align:center;margin-bottom:8px;letter-spacing:1px}
   .pcard .pf span.tick{color:#8ff0b6;font-size:24px;margin-left:8px}
   .pcard .prow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .pcard .prow3{display:grid;grid-template-columns:1.2fr .8fr 1.2fr;gap:8px}
   .pcard label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:700}
   .pcard input{display:block;width:100%;margin-top:4px;background:#0a1024;border:2px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 10px;font-size:17px;font-family:inherit;font-weight:600}
   .pcard input:focus{outline:none;border-color:var(--accent)}
@@ -151,7 +196,6 @@
   .pcard .pact{display:flex;gap:10px;align-items:center;margin-top:10px}
   .pcard .pfb{font-size:13px;line-height:1.45;margin-top:8px;color:var(--accent);min-height:1.4em}
   .pcard .pfb.ok{color:#8ff0b6}
-  .lockmsg{text-align:center;padding:30px 10px;color:var(--muted);font-size:16px;line-height:1.6}
 
   /* always-visible scroll strip (iPad hides its own scrollbar) */
   #scrollstrip{position:fixed;right:3px;top:8px;bottom:8px;width:18px;background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:9px;z-index:20;touch-action:none;display:none}
@@ -166,56 +210,21 @@
   <h1>🧩 Ionic Formula Builder</h1>
   <span class="tag">build · balance · name</span>
   <span class="spacer"></span>
-  <span class="pill">Formulas found <b id="foundCount">0</b>/6</span>
+  <span class="pill" id="pill"></span>
 </header>
 <div class="wrap">
-  <div class="tabs">
-    <button class="tab sel" id="tab1"><div class="n">Tab 1</div><div class="nm">Build Formulas</div></button>
-    <button class="tab locked" id="tab2"><div class="n">Tab 2</div><div class="nm" id="tab2nm">🔒 Name Them</div></button>
-  </div>
+  <div class="tabs" id="tabs"></div>
 
-  <!-- ===== TAB 1 ===== -->
-  <div id="view1">
-    <div class="card">
-      <h2>Step 1 · Pick ions from the periodic table</h2>
-      <div id="ptwrap"><div id="ptinner">
-        <div class="gh" id="gh"></div>
-        <div id="ptgrid"></div>
-      </div></div>
-      <div class="hint" style="margin-top:6px">Tap an element to bring its ion to the workshop below. Tap the same element again to get another one. Hydrogen is grey because it can be 1+ <i>or</i> 1−.</div>
-    </div>
+  <div id="view1"></div>
 
-    <div class="card">
-      <h2>Step 2 · Assemble the compound</h2>
-      <div class="wtop">
-        <div class="sel" id="selInfo"></div>
-        <div class="net idle" id="net"><div class="lab">Net<br>charge</div><div class="val" id="netVal">0</div></div>
-      </div>
-      <div class="stagewrap"><canvas id="bench"></canvas></div>
-      <div class="status" id="status"></div>
-      <div class="rowbtns">
-        <button class="btn cat" id="addCat">+ Add another cation</button>
-        <button class="btn an" id="addAn">+ Add another anion</button>
-        <button class="btn secondary" id="apart">Take it apart</button>
-        <button class="btn secondary" id="clear">Clear</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Formulas you've discovered (find 6)</h2>
-      <div class="found" id="found"></div>
-      <div class="hint" style="margin-top:8px">Try different combinations: some need one of each ion, and some need more than one of an ion to cancel the charges.</div>
-    </div>
-  </div>
-
-  <!-- ===== TAB 2 ===== -->
+  <!-- ===== TAB 2: name (single charge) ===== -->
   <div id="view2" style="display:none">
     <div class="card">
       <h2>Part 1 · Watch how a compound is named</h2>
       <div class="exnote"><b>Example:</b> this is a compound you did <b>not</b> build. Step through it to see how its name is made.</div>
-      <div class="nstage" id="nstage">
+      <div class="nstage">
         <div class="nlab">Formula</div>
-        <div class="fRow" id="fRow"><span class="part pc" id="pCat"></span><span class="part pc ps" id="pCatSub"></span><span class="part pa" id="pAn"></span><span class="part pa ps" id="pAnSub"></span></div>
+        <div class="fRow"><span class="part pc" id="pCat"></span><span class="part pc ps" id="pCatSub"></span><span class="part pa" id="pAn"></span><span class="part pa ps" id="pAnSub"></span></div>
         <div class="arrowrow">↓</div>
         <div class="nlab">Name</div>
         <div class="nRow" id="nRow"><span class="nw cat" id="nCat"></span><span class="nw an" id="nAn"><span id="nStem"></span><span class="end" id="nEnd"></span><span class="ide" id="nIde">ide</span></span></div>
@@ -229,13 +238,71 @@
         <button class="btn secondary" id="nmReplay">↺ Replay</button>
         <button class="btn secondary" id="nmOther">Show a different example</button>
       </div>
-      <div style="margin-top:14px;font-size:16px;line-height:1.7;text-align:center"><span style="color:var(--cat);font-weight:800">metal's name</span> + <span style="color:var(--an);font-weight:800">nonmetal's name</span> with its ending <span style="color:#ff8b9b;font-weight:800">dropped</span> and <span style="color:var(--accent);font-weight:800">-ide</span> added</div>
+      <div class="pnote"><span style="color:var(--cat);font-weight:800">metal's name</span> + <span style="color:var(--an);font-weight:800">nonmetal's name</span> with its ending <span style="color:#ff8b9b;font-weight:800">dropped</span> and <span style="color:var(--accent);font-weight:800">-ide</span> added</div>
     </div>
     <div class="card">
       <h2>Part 2 · Your turn: name the compounds you discovered <span id="namedCount" style="color:var(--accent)"></span></h2>
       <div class="exnote">Type the <b>metal's name</b>, then the <b>nonmetal's name</b> (with the <b>-ide</b> ending), and then the whole <b>compound name</b>. Press <b>Check</b> to see how you did.</div>
       <div class="pgrid" id="practice"></div>
       <div class="status" id="allNamed" style="text-align:center;font-size:17px"></div>
+    </div>
+  </div>
+
+  <!-- ===== TAB 3: intro to multi-charge metals ===== -->
+  <div id="view3" style="display:none">
+    <div class="card">
+      <h2>Metals that can have more than one charge</h2>
+      <div class="mlist" id="mlist"></div>
+      <div class="nstage">
+        <div class="irow" id="iEl"><span class="m" id="iM"></span><span class="pl">+</span><span class="a" id="iA"></span></div>
+        <div class="lanes">
+          <div class="lane" id="laneA"><div class="lt" id="ltA"></div><div class="ions" id="ionsA"></div><div class="lform" id="formA"></div><div class="lname" id="nameA"></div></div>
+          <div class="lane" id="laneB"><div class="lt" id="ltB"></div><div class="ions" id="ionsB"></div><div class="lform" id="formB"></div><div class="lname" id="nameB"></div></div>
+        </div>
+        <div class="cap" id="iCap"></div>
+        <div class="dots" id="iDots"></div>
+      </div>
+      <div class="rowbtns" style="justify-content:center">
+        <button class="btn secondary" id="iBack">◀ Back</button>
+        <button class="btn" id="iPlay">▶ Play</button>
+        <button class="btn secondary" id="iNext">Next ▶</button>
+        <button class="btn secondary" id="iReplay">↺ Replay</button>
+        <button class="btn secondary" id="iOther">Try another metal</button>
+      </div>
+      <div class="rrow" id="iRoman"></div>
+      <div class="hint" id="iUnlock" style="text-align:center;margin-top:10px"></div>
+    </div>
+  </div>
+
+  <!-- ===== TAB 4: build (multi-charge) ===== -->
+  <div id="view4" style="display:none"></div>
+
+  <!-- ===== TAB 5: name with Roman numerals ===== -->
+  <div id="view5" style="display:none">
+    <div class="card">
+      <h2>Part 1 · Watch how Roman numerals are used (a pair you did not build)</h2>
+      <div class="nstage">
+        <div class="lanes" id="rLanes">
+          <div class="lane vis" id="rA"></div>
+          <div class="lane vis" id="rB"></div>
+        </div>
+        <div class="cap" id="rCap"></div>
+        <div class="dots" id="rDots"></div>
+      </div>
+      <div class="rowbtns" style="justify-content:center">
+        <button class="btn secondary" id="rBack">◀ Back</button>
+        <button class="btn" id="rPlay">▶ Play</button>
+        <button class="btn secondary" id="rNext">Next ▶</button>
+        <button class="btn secondary" id="rReplay">↺ Replay</button>
+        <button class="btn secondary" id="rOther">Show a different example</button>
+      </div>
+      <div class="pnote"><span style="color:var(--cat);font-weight:800">metal's name</span><span style="color:var(--rom);font-weight:800">(Roman numeral for its charge)</span> + <span style="color:var(--an);font-weight:800">nonmetal stem + -ide</span></div>
+    </div>
+    <div class="card">
+      <h2>Part 2 · Your turn: name each pair you built <span id="named2Count" style="color:var(--accent)"></span></h2>
+      <div class="exnote">Each pair has the <b>same two elements</b> but different formulas. Work out the metal's charge, write it as a <b>Roman numeral</b>, and then name the compound. Press <b>Check</b> on each one.</div>
+      <div id="practice2"></div>
+      <div class="status" id="all2Named" style="text-align:center;font-size:17px"></div>
     </div>
   </div>
 </div>
@@ -249,10 +316,12 @@ const $=s=>document.querySelector(s);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const rnd=(a,b)=>a+Math.random()*(b-a);
 const gcd=(a,b)=>b?gcd(b,a%b):a;
+const lcm=(a,b)=>a*b/gcd(a,b);
 const SUPD={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
 const SUBD='₀₁₂₃₄₅₆₇₈₉';
 const sub=n=>n>1?String(n).replace(/\d/g,d=>SUBD[+d]):'';
 const ionTxt=(sym,q,pos)=>sym+(q>1?String(q).replace(/\d/g,d=>SUPD[d]):'')+(pos?'⁺':'⁻');
+const ROMAN=['','I','II','III','IV','V','VI','VII'];
 
 /* ======================= element data ======================= */
 const NAMES={H:'Hydrogen',He:'Helium',Li:'Lithium',Be:'Beryllium',B:'Boron',C:'Carbon',N:'Nitrogen',O:'Oxygen',F:'Fluorine',Ne:'Neon',Na:'Sodium',Mg:'Magnesium',Al:'Aluminum',Si:'Silicon',P:'Phosphorus',S:'Sulfur',Cl:'Chlorine',Ar:'Argon',
@@ -260,7 +329,6 @@ const NAMES={H:'Hydrogen',He:'Helium',Li:'Lithium',Be:'Beryllium',B:'Boron',C:'C
   Rb:'Rubidium',Sr:'Strontium',Y:'Yttrium',Zr:'Zirconium',Nb:'Niobium',Mo:'Molybdenum',Tc:'Technetium',Ru:'Ruthenium',Rh:'Rhodium',Pd:'Palladium',Ag:'Silver',Cd:'Cadmium',In:'Indium',Sn:'Tin',Sb:'Antimony',Te:'Tellurium',I:'Iodine',Xe:'Xenon',
   Cs:'Cesium',Ba:'Barium',Hf:'Hafnium',Ta:'Tantalum',W:'Tungsten',Re:'Rhenium',Os:'Osmium',Ir:'Iridium',Pt:'Platinum',Au:'Gold',Hg:'Mercury',Tl:'Thallium',Pb:'Lead',Bi:'Bismuth',Po:'Polonium',At:'Astatine',Rn:'Radon',
   Fr:'Francium',Ra:'Radium',Rf:'Rutherfordium',Db:'Dubnium',Sg:'Seaborgium',Bh:'Bohrium',Hs:'Hassium',Mt:'Meitnerium',Ds:'Darmstadtium',Rg:'Roentgenium',Cn:'Copernicium',Nh:'Nihonium',Fl:'Flerovium',Mc:'Moscovium',Lv:'Livermorium',Ts:'Tennessine',Og:'Oganesson'};
-// [symbol, atomic number] for each row, left to right, with explicit group (column) numbers
 const ROWS=[
   [['H',1,1],['He',2,18]],
   [['Li',3,1],['Be',4,2],['B',5,13],['C',6,14],['N',7,15],['O',8,16],['F',9,17],['Ne',10,18]],
@@ -270,165 +338,258 @@ const ROWS=[
   [['Cs',55,1],['Ba',56,2],...'Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn'.split(' ').map((s,i)=>[s,72+i,4+i])],
   [['Fr',87,1],['Ra',88,2],...'Rf Db Sg Bh Hs Mt Ds Rg Cn Nh Fl Mc Lv Ts Og'.split(' ').map((s,i)=>[s,104+i,4+i])]
 ];
-// ions students may pick: only elements with ONE possible charge in a simple ion
+// Tabs 1-2: metals with ONE possible charge
 const CAT={Li:1,Na:1,K:1,Rb:1,Cs:1,Fr:1,Ag:1,Be:2,Mg:2,Ca:2,Sr:2,Ba:2,Ra:2,Zn:2,Cd:2,Al:3,Ga:3,Sc:3,Y:3};
+// Tabs 3-5: metals with MORE than one possible charge (two common charges each)
+const MULTI={Ti:[3,4],Cr:[2,3],Mn:[2,4],Fe:[2,3],Co:[2,3],Cu:[1,2],Au:[1,3],Sn:[2,4],Pb:[2,4]};
 const AN={F:1,Cl:1,Br:1,I:1,O:2,S:2,Se:2,N:3,P:3};
-// name stems for anions: [part kept, ending dropped]
 const STEM={F:['fluor','ine'],Cl:['chlor','ine'],Br:['brom','ine'],I:['iod','ine'],O:['ox','ygen'],S:['sulf','ur'],Se:['selen','ium'],N:['nitr','ogen'],P:['phosph','orus']};
 const FAMILY={1:['1+','pos','Alkali'],2:['2+','pos','Alk. earth'],13:['3+','pos','Boron'],14:['varies','var','Carbon'],15:['3−','neg','Nitrogen'],16:['2−','neg','Oxygen'],17:['1−','neg','Halogens'],18:['0','var','Noble']};
+function mkCmp(metal,q,an){ const qa=AN[an],l=lcm(q,qa),fc=l/q,fa=l/qa; return {metal,q,an,qa,fc,fa,disp:metal+sub(fc)+an+sub(fa),key:metal+q+an}; }
+const mName=m=>NAMES[m].toLowerCase(), aName=an=>STEM[an][0]+'ide';
 
 /* ======================= saved progress ======================= */
 const KEY='ionicformula.v1';
-let state={found:[]};
-try{ const d=JSON.parse(localStorage.getItem(KEY)||'null'); if(d&&Array.isArray(d.found)) state=d; }catch(e){}
+let state={found:[],named:{},pairs:[],named2:{},introSeen:false};
+try{ const d=JSON.parse(localStorage.getItem(KEY)||'null'); if(d&&Array.isArray(d.found)) state=Object.assign(state,d); }catch(e){}
 const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} };
 let toastT=0;
 function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3800); }
 
+/* ======================= tabs, gating ======================= */
+const TABS=[['Tab 1','Build Formulas',1],['Tab 2','Name Them',1],['Tab 3','Metals with Many Charges',2],['Tab 4','Build Multi-Charge Formulas',2],['Tab 5','Name with Roman Numerals',2]];
+const namedCount=()=>state.found.filter(f=>state.named[f.key]).length;
+function lockReason(n){
+  if(n===2&&state.found.length<6) return `Find six formulas in Tab 1 first (${state.found.length}/6).`;
+  if(n===3&&!(state.found.length>=6&&namedCount()>=state.found.length)) return 'Name every compound you found in Tab 2 first.';
+  if(n===4&&!state.introSeen) return 'Finish the animation in Tab 3 first.';
+  if(n===5&&state.pairs.length<3) return `Complete three pairs of compounds in Tab 4 first (${state.pairs.length}/3).`;
+  return ''; }
+let curTab=1;
+function renderTabs(){ $('#tabs').innerHTML=TABS.map((t,i)=>{ const n=i+1,lock=lockReason(n); return `<button class="tab ${t[2]===2?'g2':''} ${n===curTab?'sel':''} ${lock?'locked':''}" data-n="${n}"><div class="n">${t[0]}</div><div class="nm">${lock?'🔒 ':''}${t[1]}</div></button>`; }).join('');
+  document.querySelectorAll('#tabs .tab').forEach(b=>b.onclick=()=>showTab(+b.dataset.n));
+  $('#pill').innerHTML=`Formulas <b>${Math.min(6,state.found.length)}/6</b> &nbsp;·&nbsp; Pairs <b>${Math.min(3,state.pairs.length)}/3</b>`; }
+function showTab(n){ const r=lockReason(n); if(r){ toast(r); return; } curTab=n;
+  for(let i=1;i<=5;i++) $('#view'+i).style.display=i===n?'':'none';
+  stopAllPlay(); renderTabs(); window.scrollTo(0,0);
+  if(n===1) B1.bench.resize(); if(n===2) showNaming(); if(n===3) showIntro(); if(n===4) B2.bench.resize(); if(n===5) showRoman(); }
+
 /* ======================= periodic table ======================= */
-(function buildTable(){
-  const gh=$('#gh'); let h='';
+function buildTable(root,mode){
+  const gh=root.querySelector('.gh'),grid=root.querySelector('.ptgrid'); const multi=mode==='multi'; let h='';
   for(let g=1;g<=18;g++) h+=`<div class="gn" style="grid-column:${g};grid-row:1">${g}</div>`;
-  for(let g=1;g<=18;g++){ if(g>=3&&g<=12) continue; const f=FAMILY[g]; h+=`<div class="gc ${f[1]}" style="grid-column:${g};grid-row:2">${f[0]}</div><div class="fam" style="grid-column:${g};grid-row:3">${f[2]}</div>`; }
-  h+=`<div class="gc var" style="grid-column:3/13;grid-row:2">transition metals: charge varies</div><div class="fam" style="grid-column:3/13;grid-row:3;opacity:.8">(a few, like Zn, Ag, Sc, Y, Cd, have just one charge: it's shown in the corner)</div>`;
+  for(let g=1;g<=18;g++){ if(g>=3&&g<=12) continue; const f=FAMILY[g]; let txt=f[0],cls=f[1];
+    if(multi){ if(g===14){ txt='2+ / 4+'; cls='pos'; } else if(g===1||g===2||g===13) cls='var'; }
+    h+=`<div class="gc ${cls}" style="grid-column:${g};grid-row:2">${txt}</div><div class="fam" style="grid-column:${g};grid-row:3">${f[2]}</div>`; }
+  h+=multi?`<div class="gc pos" style="grid-column:3/13;grid-row:2;font-size:12px">transition metals: pick one, then choose its charge</div><div class="fam" style="grid-column:3/13;grid-row:3;opacity:.8">(the charges each metal can have are shown in the corner of its box)</div>`
+          :`<div class="gc var" style="grid-column:3/13;grid-row:2">transition metals: charge varies</div><div class="fam" style="grid-column:3/13;grid-row:3;opacity:.8">(a few, like Zn, Ag, Sc, Y, Cd, have just one charge: it's shown in the corner)</div>`;
   gh.innerHTML=h;
-  let g='<div class="legend"><div><span class="sw" style="background:#4a2d14;border-color:#b8742f"></span><b style="color:var(--cat)">Cations</b> (positive): tap to pick. The charge is in the corner.</div>'+
+  let g=multi?
+    '<div class="legend"><div><span class="sw" style="background:#4a2d14;border-color:#b8742f"></span><b style="color:var(--cat)">Metals with more than one charge</b>: tap one, then choose which charge to use.</div>'+
+    '<div><span class="sw" style="background:#0f3f31;border-color:#2a9a74"></span><b style="color:var(--an)">Nonmetals</b>: tap one to pair it with the metal.</div>'+
+    '<div><span class="sw" style="background:#1b2236;border-color:#252d44"></span><b>Grey</b>: single-charge metals (you used those in Tabs 1 and 2), metalloids, and noble gases.</div>'+
+    '<div><span style="display:inline-block;width:20px;height:0;border-top:3px solid var(--accent);vertical-align:3px;margin-right:6px"></span>The staircase separates metals from nonmetals.</div></div>':
+    '<div class="legend"><div><span class="sw" style="background:#4a2d14;border-color:#b8742f"></span><b style="color:var(--cat)">Cations</b> (positive): tap to pick. The charge is in the corner.</div>'+
     '<div><span class="sw" style="background:#0f3f31;border-color:#2a9a74"></span><b style="color:var(--an)">Anions</b> (negative): tap to pick.</div>'+
     '<div><span class="sw" style="background:#1b2236;border-color:#252d44"></span><b>Grey</b>: not available yet (more than one charge, metalloids, or no ion).</div>'+
     '<div><span style="display:inline-block;width:20px;height:0;border-top:3px solid var(--accent);vertical-align:3px;margin-right:6px"></span>The staircase separates metals (left and below) from nonmetals (right and above). The elements touching it are metalloids.</div></div>';
-  ROWS.forEach((row,ri)=>{ row.forEach(([s,z,col])=>{ const c=CAT[s],a=AN[s]; const st=`grid-column:${col};grid-row:${ri+1}`;
-      if(c) g+=`<button class="el cat" data-s="${s}" style="${st}" title="${NAMES[s]}, ${c}+"><i>${z}</i><b>${s}</b><u>${c}+</u></button>`;
-      else if(a) g+=`<button class="el an" data-s="${s}" style="${st}" title="${NAMES[s]}, ${a}−"><i>${z}</i><b>${s}</b><u>${a}−</u></button>`;
+  ROWS.forEach((row,ri)=>{ row.forEach(([s,z,col])=>{ const st=`grid-column:${col};grid-row:${ri+1}`;
+      if(!multi&&CAT[s]) g+=`<button class="el cat" data-s="${s}" style="${st}" title="${NAMES[s]}, ${CAT[s]}+"><i>${z}</i><b>${s}</b><u>${CAT[s]}+</u></button>`;
+      else if(multi&&MULTI[s]) g+=`<button class="el cat multi" data-s="${s}" style="${st}" title="${NAMES[s]}: ${MULTI[s].join('+ or ')}+"><i>${z}</i><b>${s}</b><u>${MULTI[s].join('/')}+</u></button>`;
+      else if(AN[s]) g+=`<button class="el an" data-s="${s}" style="${st}" title="${NAMES[s]}, ${AN[s]}−"><i>${z}</i><b>${s}</b><u>${AN[s]}−</u></button>`;
       else g+=`<div class="el off" style="${st}" title="${NAMES[s]}"><i>${z}</i><b>${s}</b></div>`; });
     if(ri>=5) g+=`<div class="el ph" style="grid-column:3;grid-row:${ri+1}">${ri===5?'57–71':'89–103'}</div>`; });
-  // metalloid staircase, drawn in cell units (18 columns x 7 rows)
-  g+=`<svg id="stairs" viewBox="0 0 18 7" preserveAspectRatio="none"><path d="M12 1 V2 H13 V4 H14 V5 H16"/></svg>`;
-  $('#ptgrid').innerHTML=g;
-  $('#ptgrid').addEventListener('click',e=>{ const b=e.target.closest('button.el'); if(b) pick(b.dataset.s); });
-})();
+  g+=`<svg class="stairs" viewBox="0 0 18 7" preserveAspectRatio="none"><path d="M12 1 V2 H13 V4 H14 V5 H16"/></svg>`;
+  grid.innerHTML=g; }
 
-/* ======================= workshop (jigsaw tiles) ======================= */
-const cv=$('#bench'), ctx=cv.getContext('2d'); const BW=1000,BH=400,U=48,TW=84; let VS=1;
-function resize(){ const r=cv.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2.5); cv.width=Math.max(10,Math.round(r.width*dpr)); cv.height=Math.round(cv.width*BH/BW); VS=cv.width/BW; }
-window.addEventListener('resize',resize);
-const B={cat:null,an:null,tiles:[],uid:0,drag:null,hint:null,doneKey:null,t:0,result:null};
-const posOf=t=>t.kind==='cat';
-function mkTile(kind){ const sym=kind==='cat'?B.cat:B.an,q=kind==='cat'?CAT[sym]:AN[sym];
-  const t={id:++B.uid,kind,sym,q,x:0,y:0,h:q*U,filled:Array(q).fill(false),pop:1};
-  for(let k=0;k<80;k++){ t.x=kind==='cat'?rnd(580,BW-TW-60):rnd(40,300); t.y=rnd(24,BH-24-t.h);
-    if(B.tiles.every(o=>t.x>o.x+TW+30||t.x+TW+30<o.x||t.y>o.y+o.h+12||t.y+t.h+12<o.y)) break; }
-  return t; }
-function count(kind){ return B.tiles.filter(t=>t.kind===kind).length; }
-function pick(sym){ const isC=!!CAT[sym];
-  if((isC?B.cat:B.an)===sym){ addMore(isC?'cat':'an'); return; }
-  B.tiles=B.tiles.filter(t=>t.kind!==(isC?'cat':'an')); if(isC) B.cat=sym; else B.an=sym;
-  B.tiles.push(mkTile(isC?'cat':'an')); relink(); refresh(); }
-function addMore(kind){ if(!(kind==='cat'?B.cat:B.an)){ setStatus(kind==='cat'?'Pick a cation (orange element) from the table first.':'Pick an anion (green element) from the table first.'); return; }
-  if(count(kind)>=6){ toast('That is the most you can use at once.'); return; } B.tiles.push(mkTile(kind)); relink(); refresh(); }
-$('#addCat').onclick=()=>addMore('cat'); $('#addAn').onclick=()=>addMore('an');
-$('#apart').onclick=()=>{ B.tiles.forEach(t=>{ const n=mkTile(t.kind); t.x=n.x; t.y=n.y; }); relink(); refresh(); };
-$('#clear').onclick=()=>{ B.tiles=[]; B.cat=B.an=null; B.drag=null; relink(); refresh(); };
-const tabPts=t=>Array.from({length:t.q},(_,i)=>({x:t.x+TW+14,y:t.y+U*(i+.5),i,t}));
-const slotPts=t=>Array.from({length:t.q},(_,i)=>({x:t.x+14,y:t.y+U*(i+.5),i,t}));
-function relink(){ B.tiles.forEach(t=>t.filled.fill(false)); B.links=[];
-  const tabs=B.tiles.filter(t=>t.kind==='an').flatMap(tabPts), slots=B.tiles.filter(t=>t.kind==='cat').flatMap(slotPts);
-  for(const a of tabs){ let best=null,bd=6; for(const s of slots){ if(s.t.filled[s.i]) continue; const d=Math.hypot(a.x-s.x,a.y-s.y); if(d<bd){bd=d;best=s;} }
-    if(best){ a.t.filled[a.i]=true; best.t.filled[best.i]=true; B.links.push([a.t,best.t]); } } }
-const clusterOf=t=>{ const seen=new Set([t]),q=[t]; while(q.length){ const u=q.pop(); for(const [a,b] of B.links){ const v=a===u?b:b===u?a:null; if(v&&!seen.has(v)){ seen.add(v); q.push(v); } } } return [...seen]; };
-function snapCandidate(cluster){ const inC=new Set(cluster); let best=null,bd=36;
-  for(const t of cluster){ if(t.kind==='an'){ for(const a of tabPts(t)){ for(const o of B.tiles){ if(inC.has(o)||o.kind!=='cat') continue; for(const s of slotPts(o)){ if(o.filled[s.i]) continue; const d=Math.hypot(a.x-s.x,a.y-s.y); if(d<bd){bd=d;best={dx:s.x-a.x,dy:s.y-a.y,x:s.x,y:s.y};} } } } }
-    else{ for(const s of slotPts(t)){ for(const o of B.tiles){ if(inC.has(o)||o.kind!=='an') continue; for(const a of tabPts(o)){ if(o.filled[a.i]) continue; const d=Math.hypot(a.x-s.x,a.y-s.y); if(d<bd){bd=d;best={dx:a.x-s.x,dy:a.y-s.y,x:a.x,y:a.y};} } } } } }
-  return best; }
-function bpt(e){ const r=cv.getBoundingClientRect(); return {x:(e.clientX-r.left)/r.width*BW,y:(e.clientY-r.top)/r.height*BH}; }
-cv.addEventListener('pointerdown',e=>{ e.preventDefault(); try{cv.setPointerCapture(e.pointerId);}catch(_){} const p=bpt(e);
-  for(let i=B.tiles.length-1;i>=0;i--){ const t=B.tiles[i]; const x0=t.kind==='cat'?t.x:t.x, x1=t.x+TW+(t.kind==='an'?22:0);
-    if(p.x>=x0&&p.x<=x1&&p.y>=t.y&&p.y<=t.y+t.h){ const cl=clusterOf(t); B.tiles=B.tiles.filter(o=>!cl.includes(o)).concat(cl); B.drag={cl,px:p.x,py:p.y,start:cl.map(o=>[o.x,o.y])}; cv.classList.add('grabbing'); return; } } });
-cv.addEventListener('pointermove',e=>{ const d=B.drag; if(!d) return; const p=bpt(e); let dx=p.x-d.px,dy=p.y-d.py;
-  const minX=Math.min(...d.start.map(s=>s[0])),maxX=Math.max(...d.start.map((s,i)=>s[0]+TW+(d.cl[i].kind==='an'?24:0))),minY=Math.min(...d.start.map(s=>s[1])),maxY=Math.max(...d.start.map((s,i)=>s[1]+d.cl[i].h));
-  dx=clamp(dx,6-minX,BW-6-maxX); dy=clamp(dy,6-minY,BH-6-maxY); d.cl.forEach((o,i)=>{ o.x=d.start[i][0]+dx; o.y=d.start[i][1]+dy; }); B.hint=snapCandidate(d.cl); });
-function endDrag(){ const d=B.drag; if(!d) return; B.drag=null; cv.classList.remove('grabbing');
-  const c=snapCandidate(d.cl); B.hint=null; if(c){ d.cl.forEach(o=>{ o.x+=c.dx; o.y+=c.dy; o.pop=1.0; }); } relink(); refresh(); }
-cv.addEventListener('pointerup',endDrag); cv.addEventListener('pointercancel',endDrag);
+/* ======================= bench: jigsaw workshop (reusable) ======================= */
+const BENCHES=[];
+function makeBench(cv,hooks){
+  const ctx=cv.getContext('2d'); const BW=1000,BH=400,U=48,TW=84; let VS=1;
+  const B={cat:null,an:null,tiles:[],uid:0,drag:null,hint:null,result:null,doneKey:null,links:[]};
+  function resize(){ const r=cv.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2.5); if(!r.width) return; cv.width=Math.max(10,Math.round(r.width*dpr)); cv.height=Math.round(cv.width*BH/BW); VS=cv.width/BW; }
+  window.addEventListener('resize',resize);
+  const count=kind=>B.tiles.filter(t=>t.kind===kind).length;
+  function mkTile(kind){ const ion=B[kind],q=ion.q; const t={id:++B.uid,kind,sym:ion.sym,q,x:0,y:0,h:q*U,filled:Array(q).fill(false),pop:1};
+    for(let k=0;k<80;k++){ t.x=kind==='cat'?rnd(580,BW-TW-60):rnd(40,300); t.y=rnd(24,BH-24-t.h);
+      if(B.tiles.every(o=>t.x>o.x+TW+30||t.x+TW+30<o.x||t.y>o.y+o.h+12||t.y+t.h+12<o.y)) break; }
+    return t; }
+  function setIon(kind,sym,q){ B.tiles=B.tiles.filter(t=>t.kind!==kind); B[kind]={sym,q}; B.tiles.push(mkTile(kind)); relink(); change(); }
+  function addMore(kind){ if(!B[kind]){ hooks.onNeed&&hooks.onNeed(kind); return; } if(count(kind)>=6){ toast('That is the most you can use at once.'); return; } B.tiles.push(mkTile(kind)); relink(); change(); }
+  function apart(){ B.tiles.forEach(t=>{ const n=mkTile(t.kind); t.x=n.x; t.y=n.y; }); relink(); change(); }
+  function clear(){ B.tiles=[]; B.cat=B.an=null; B.drag=null; relink(); change(); }
+  const tabPts=t=>Array.from({length:t.q},(_,i)=>({x:t.x+TW+14,y:t.y+U*(i+.5),i,t}));
+  const slotPts=t=>Array.from({length:t.q},(_,i)=>({x:t.x+14,y:t.y+U*(i+.5),i,t}));
+  function relink(){ B.tiles.forEach(t=>t.filled.fill(false)); B.links=[];
+    const tabs=B.tiles.filter(t=>t.kind==='an').flatMap(tabPts), slots=B.tiles.filter(t=>t.kind==='cat').flatMap(slotPts);
+    for(const a of tabs){ let best=null,bd=6; for(const s of slots){ if(s.t.filled[s.i]) continue; const d=Math.hypot(a.x-s.x,a.y-s.y); if(d<bd){bd=d;best=s;} }
+      if(best){ a.t.filled[a.i]=true; best.t.filled[best.i]=true; B.links.push([a.t,best.t]); } } }
+  const clusterOf=t=>{ const seen=new Set([t]),q=[t]; while(q.length){ const u=q.pop(); for(const [a,b] of B.links){ const v=a===u?b:b===u?a:null; if(v&&!seen.has(v)){ seen.add(v); q.push(v); } } } return [...seen]; };
+  function snapCandidate(cluster){ const inC=new Set(cluster); let best=null,bd=36;
+    for(const t of cluster){ if(t.kind==='an'){ for(const a of tabPts(t)){ for(const o of B.tiles){ if(inC.has(o)||o.kind!=='cat') continue; for(const s of slotPts(o)){ if(o.filled[s.i]) continue; const d=Math.hypot(a.x-s.x,a.y-s.y); if(d<bd){bd=d;best={dx:s.x-a.x,dy:s.y-a.y,x:s.x,y:s.y};} } } } }
+      else{ for(const s of slotPts(t)){ for(const o of B.tiles){ if(inC.has(o)||o.kind!=='an') continue; for(const a of tabPts(o)){ if(o.filled[a.i]) continue; const d=Math.hypot(a.x-s.x,a.y-s.y); if(d<bd){bd=d;best={dx:a.x-s.x,dy:a.y-s.y,x:a.x,y:a.y};} } } } } }
+    return best; }
+  const bpt=e=>{ const r=cv.getBoundingClientRect(); return {x:(e.clientX-r.left)/r.width*BW,y:(e.clientY-r.top)/r.height*BH}; };
+  cv.addEventListener('pointerdown',e=>{ e.preventDefault(); try{cv.setPointerCapture(e.pointerId);}catch(_){} const p=bpt(e);
+    for(let i=B.tiles.length-1;i>=0;i--){ const t=B.tiles[i],x1=t.x+TW+(t.kind==='an'?22:0);
+      if(p.x>=t.x&&p.x<=x1&&p.y>=t.y&&p.y<=t.y+t.h){ const cl=clusterOf(t); B.tiles=B.tiles.filter(o=>!cl.includes(o)).concat(cl); B.drag={cl,px:p.x,py:p.y,start:cl.map(o=>[o.x,o.y])}; cv.classList.add('grabbing'); return; } } });
+  cv.addEventListener('pointermove',e=>{ const d=B.drag; if(!d) return; const p=bpt(e); let dx=p.x-d.px,dy=p.y-d.py;
+    const minX=Math.min(...d.start.map(s=>s[0])),maxX=Math.max(...d.start.map((s,i)=>s[0]+TW+(d.cl[i].kind==='an'?24:0))),minY=Math.min(...d.start.map(s=>s[1])),maxY=Math.max(...d.start.map((s,i)=>s[1]+d.cl[i].h));
+    dx=clamp(dx,6-minX,BW-6-maxX); dy=clamp(dy,6-minY,BH-6-maxY); d.cl.forEach((o,i)=>{ o.x=d.start[i][0]+dx; o.y=d.start[i][1]+dy; }); B.hint=snapCandidate(d.cl); });
+  function endDrag(){ const d=B.drag; if(!d) return; B.drag=null; cv.classList.remove('grabbing'); const c=snapCandidate(d.cl); B.hint=null; if(c) d.cl.forEach(o=>{ o.x+=c.dx; o.y+=c.dy; o.pop=1.0; }); relink(); change(); }
+  cv.addEventListener('pointerup',endDrag); cv.addEventListener('pointercancel',endDrag);
 
-function tilePath(t){ const x=t.x,y=t.y,h=t.h,W=TW,p=new Path2D(); const r=8;
-  if(t.kind==='an'){ p.moveTo(x+r,y); p.lineTo(x+W-r,y); p.quadraticCurveTo(x+W,y,x+W,y+r);
-    for(let i=0;i<t.q;i++){ const yc=y+U*(i+.5); p.lineTo(x+W,yc-6); p.lineTo(x+W+6,yc-6); p.arc(x+W+14,yc,10,Math.atan2(-6,-8),Math.atan2(6,-8),false); p.lineTo(x+W,yc+6); }
-    p.lineTo(x+W,y+h-r); p.quadraticCurveTo(x+W,y+h,x+W-r,y+h); p.lineTo(x+r,y+h); p.quadraticCurveTo(x,y+h,x,y+h-r); p.lineTo(x,y+r); p.quadraticCurveTo(x,y,x+r,y); }
-  else{ p.moveTo(x+r,y); p.lineTo(x+W-r,y); p.quadraticCurveTo(x+W,y,x+W,y+r); p.lineTo(x+W,y+h-r); p.quadraticCurveTo(x+W,y+h,x+W-r,y+h); p.lineTo(x+r,y+h); p.quadraticCurveTo(x,y+h,x,y+h-r);
-    for(let i=t.q-1;i>=0;i--){ const yc=y+U*(i+.5); p.lineTo(x,yc+6); p.lineTo(x+6,yc+6); p.arc(x+14,yc,10,Math.atan2(6,-8),Math.atan2(-6,-8),true); p.lineTo(x,yc-6); }
-    p.lineTo(x,y+r); p.quadraticCurveTo(x,y,x+r,y); }
-  p.closePath(); return p; }
-function drawTile(t,glow){ const cat=t.kind==='cat'; const g=ctx.createLinearGradient(t.x,t.y,t.x+TW,t.y+t.h);
-  g.addColorStop(0,cat?'#ffc789':'#8cf0c4'); g.addColorStop(1,cat?'#e0801f':'#22a37d');
-  ctx.save(); const cx=t.x+TW/2,cy=t.y+t.h/2; if(t.pop>0){ const s=1+.06*Math.sin(t.pop*Math.PI); ctx.translate(cx,cy); ctx.scale(s,s); ctx.translate(-cx,-cy); }
-  const p=tilePath(t); if(glow){ ctx.shadowColor='#5bff9b'; ctx.shadowBlur=18; }
-  ctx.fillStyle=g; ctx.fill(p); ctx.shadowBlur=0; ctx.lineWidth=glow?3:2; ctx.strokeStyle=glow?'#7dffb0':(cat?'#8a4a10':'#0f6b52'); ctx.lineJoin='round'; ctx.stroke(p);
-  ctx.fillStyle='#10213a'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.font='800 25px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif';
-  ctx.fillText(ionTxt(t.sym,t.q,cat),t.x+(cat?TW/2+8:TW/2-2),t.y+t.h/2+1);
-  // little unit markers at each tab / slot position
-  ctx.font='700 9px sans-serif'; ctx.fillStyle='rgba(16,33,58,.55)';
-  for(let i=0;i<t.q;i++){ const yc=t.y+U*(i+.5); if(cat) ctx.fillText(t.filled[i]?'':'+',t.x+14,yc); else ctx.fillText('−',t.x+TW+14,yc); }
-  ctx.restore(); }
-function drawBench(){ ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,cv.width,cv.height); ctx.setTransform(VS,0,0,VS,0,0);
-  const bg=ctx.createLinearGradient(0,0,0,BH); bg.addColorStop(0,'#0b1330'); bg.addColorStop(1,'#0a1024'); ctx.fillStyle=bg; ctx.fillRect(0,0,BW,BH);
-  ctx.font='700 12px sans-serif'; ctx.fillStyle='rgba(200,215,245,.4)'; ctx.textAlign='center'; ctx.textBaseline='middle';
-  if(!B.tiles.length) ctx.fillText('Tap an element in the periodic table to bring its ion here',BW/2,BH/2);
-  else{ ctx.fillText('Anions have tabs that stick out. Cations have slots. Fit every tab into a slot.',BW/2,BH-12); }
-  const done=B.result; const drag=B.drag?B.drag.cl:[];
-  const order=B.tiles.slice().sort((a,b)=>(drag.includes(a)?1:0)-(drag.includes(b)?1:0));
-  for(const t of order){ const isDone=!!done; drawTile(t,isDone); }
-  if(B.hint){ ctx.save(); ctx.strokeStyle='#fff'; ctx.lineWidth=3; ctx.setLineDash([5,4]); ctx.beginPath(); ctx.arc(B.hint.x,B.hint.y,15,0,6.2832); ctx.stroke(); ctx.restore(); }
-  if(done){ ctx.font='900 40px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif'; const label='Formula: '+done.disp,w=ctx.measureText(label).width+36;
-    ctx.fillStyle='rgba(10,17,36,.92)'; ctx.strokeStyle='#2fbf57'; ctx.lineWidth=2.5; ctx.beginPath(); ctx.roundRect?ctx.roundRect(14,12,w,62,14):ctx.rect(14,12,w,62); ctx.fill(); ctx.stroke();
-    ctx.textAlign='left'; ctx.fillStyle='#8ff0b6'; ctx.fillText(label,32,44); ctx.textAlign='center'; } }
+  function tilePath(t){ const x=t.x,y=t.y,h=t.h,W=TW,p=new Path2D(),r=8;
+    if(t.kind==='an'){ p.moveTo(x+r,y); p.lineTo(x+W-r,y); p.quadraticCurveTo(x+W,y,x+W,y+r);
+      for(let i=0;i<t.q;i++){ const yc=y+U*(i+.5); p.lineTo(x+W,yc-6); p.lineTo(x+W+6,yc-6); p.arc(x+W+14,yc,10,Math.atan2(-6,-8),Math.atan2(6,-8),false); p.lineTo(x+W,yc+6); }
+      p.lineTo(x+W,y+h-r); p.quadraticCurveTo(x+W,y+h,x+W-r,y+h); p.lineTo(x+r,y+h); p.quadraticCurveTo(x,y+h,x,y+h-r); p.lineTo(x,y+r); p.quadraticCurveTo(x,y,x+r,y); }
+    else{ p.moveTo(x+r,y); p.lineTo(x+W-r,y); p.quadraticCurveTo(x+W,y,x+W,y+r); p.lineTo(x+W,y+h-r); p.quadraticCurveTo(x+W,y+h,x+W-r,y+h); p.lineTo(x+r,y+h); p.quadraticCurveTo(x,y+h,x,y+h-r);
+      for(let i=t.q-1;i>=0;i--){ const yc=y+U*(i+.5); p.lineTo(x,yc+6); p.lineTo(x+6,yc+6); p.arc(x+14,yc,10,Math.atan2(6,-8),Math.atan2(-6,-8),true); p.lineTo(x,yc-6); }
+      p.lineTo(x,y+r); p.quadraticCurveTo(x,y,x+r,y); }
+    p.closePath(); return p; }
+  function drawTile(t,glow){ const cat=t.kind==='cat'; const g=ctx.createLinearGradient(t.x,t.y,t.x+TW,t.y+t.h);
+    g.addColorStop(0,cat?'#ffc789':'#8cf0c4'); g.addColorStop(1,cat?'#e0801f':'#22a37d');
+    ctx.save(); const cx=t.x+TW/2,cy=t.y+t.h/2; if(t.pop>0){ const s=1+.06*Math.sin(t.pop*Math.PI); ctx.translate(cx,cy); ctx.scale(s,s); ctx.translate(-cx,-cy); }
+    const p=tilePath(t); if(glow){ ctx.shadowColor='#5bff9b'; ctx.shadowBlur=18; }
+    ctx.fillStyle=g; ctx.fill(p); ctx.shadowBlur=0; ctx.lineWidth=glow?3:2; ctx.strokeStyle=glow?'#7dffb0':(cat?'#8a4a10':'#0f6b52'); ctx.lineJoin='round'; ctx.stroke(p);
+    ctx.fillStyle='#10213a'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.font='800 25px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif';
+    ctx.fillText(ionTxt(t.sym,t.q,cat),t.x+(cat?TW/2+8:TW/2-2),t.y+t.h/2+1);
+    ctx.font='700 9px sans-serif'; ctx.fillStyle='rgba(16,33,58,.55)';
+    for(let i=0;i<t.q;i++){ const yc=t.y+U*(i+.5); if(cat) ctx.fillText(t.filled[i]?'':'+',t.x+14,yc); else ctx.fillText('−',t.x+TW+14,yc); }
+    ctx.restore(); }
+  function draw(){ ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,cv.width,cv.height); ctx.setTransform(VS,0,0,VS,0,0);
+    const bg=ctx.createLinearGradient(0,0,0,BH); bg.addColorStop(0,'#0b1330'); bg.addColorStop(1,'#0a1024'); ctx.fillStyle=bg; ctx.fillRect(0,0,BW,BH);
+    ctx.font='700 12px sans-serif'; ctx.fillStyle='rgba(200,215,245,.4)'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    if(!B.tiles.length) ctx.fillText(hooks.emptyText||'Tap an element in the periodic table to bring its ion here',BW/2,BH/2);
+    else ctx.fillText('Anions have tabs that stick out. Cations have slots. Fit every tab into a slot.',BW/2,BH-12);
+    const done=B.result,drag=B.drag?B.drag.cl:[];
+    const order=B.tiles.slice().sort((a,b)=>(drag.includes(a)?1:0)-(drag.includes(b)?1:0));
+    for(const t of order) drawTile(t,!!done);
+    if(B.hint){ ctx.save(); ctx.strokeStyle='#fff'; ctx.lineWidth=3; ctx.setLineDash([5,4]); ctx.beginPath(); ctx.arc(B.hint.x,B.hint.y,15,0,6.2832); ctx.stroke(); ctx.restore(); }
+    if(done){ ctx.font='900 40px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif'; const label='Formula: '+done.disp,w=ctx.measureText(label).width+36;
+      ctx.fillStyle='rgba(10,17,36,.92)'; ctx.strokeStyle='#2fbf57'; ctx.lineWidth=2.5; ctx.beginPath(); ctx.roundRect?ctx.roundRect(14,12,w,62,14):ctx.rect(14,12,w,62); ctx.fill(); ctx.stroke();
+      ctx.textAlign='left'; ctx.fillStyle='#8ff0b6'; ctx.fillText(label,32,44); ctx.textAlign='center'; } }
+  const net=()=>B.tiles.reduce((s,t)=>s+(t.kind==='cat'?t.q:-t.q),0);
+  function evaluate(){ B.result=null; const cats=B.tiles.filter(t=>t.kind==='cat'),ans=B.tiles.filter(t=>t.kind==='an');
+    if(!cats.length||!ans.length||!B.cat||!B.an) return; if(!B.tiles.every(t=>t.filled.every(Boolean))) return; if(net()!==0) return;
+    const g=gcd(cats.length,ans.length),fc=cats.length/g,fa=ans.length/g;
+    B.result={cat:B.cat.sym,qc:B.cat.q,an:B.an.sym,qa:B.an.q,fc,fa,g,disp:B.cat.sym+sub(fc)+B.an.sym+sub(fa),key:B.cat.sym+fc+B.an.sym+fa}; }
+  function change(){ evaluate(); hooks.onChange&&hooks.onChange(B,net(),count);
+    if(B.result){ if(B.doneKey!==B.result.key){ B.doneKey=B.result.key; hooks.onComplete&&hooks.onComplete(B.result); } } else B.doneKey=null; }
+  const api={B,resize,setIon,addMore,apart,clear,net,count,change,frame(dt){ for(const t of B.tiles) if(t.pop>0) t.pop=Math.max(0,t.pop-dt*3.2); if(cv.offsetParent) draw(); }};
+  BENCHES.push(api); return api; }
 
-/* result detection + UI refresh */
-function netCharge(){ return B.tiles.reduce((s,t)=>s+(t.kind==='cat'?t.q:-t.q),0); }
-function evaluate(){ B.result=null; const cats=B.tiles.filter(t=>t.kind==='cat'),ans=B.tiles.filter(t=>t.kind==='an');
-  if(!cats.length||!ans.length) return;
-  if(!B.tiles.every(t=>t.filled.every(Boolean))) return;
-  if(netCharge()!==0) return;
-  const g=gcd(cats.length,ans.length),fc=cats.length/g,fa=ans.length/g;
-  B.result={cat:B.cat,an:B.an,fc,fa,g,disp:B.cat+sub(fc)+B.an+sub(fa),key:B.cat+fc+B.an+fa}; }
-function setStatus(s){ $('#status').textContent=s; }
-function refresh(){ evaluate(); const net=netCharge(),el=$('#net'),v=$('#netVal');
-  v.textContent=B.tiles.length?(net>0?'+'+net:net<0?'−'+Math.abs(net):'0'):'0';
-  el.className='net '+(!B.tiles.length?'idle':net>0?'pos':net<0?'neg':'zero');
-  $('#selInfo').innerHTML=(B.cat?`Cation: <b style="color:var(--cat)">${ionTxt(B.cat,CAT[B.cat],true)}</b> (${NAMES[B.cat]}) ×${count('cat')}`:'<span class="muted">Cation: none yet</span>')+'<br>'+
-    (B.an?`Anion: <b style="color:var(--an)">${ionTxt(B.an,AN[B.an],false)}</b> (${NAMES[B.an]}) ×${count('an')}`:'<span class="muted">Anion: none yet</span>');
-  let st; const r=B.result;
-  if(r){ st=`✓ Every tab fits a slot and the charges cancel (net 0). The formula is ${r.disp}.`+(r.g>1?` You used ${r.g} formula units, and the formula always shows the simplest ratio.`:''); if(!B.doneKey||B.doneKey!==r.key) record(r); B.doneKey=r.key; }
-  else{ B.doneKey=null;
-    if(!B.cat&&!B.an) st='Tap a cation (orange) and an anion (green) in the periodic table to start.';
-    else if(!B.cat) st='Now pick a cation (orange element) from the table.';
-    else if(!B.an) st='Now pick an anion (green element) from the table.';
-    else if(net!==0) st=`The net charge is ${net>0?'+':'−'}${Math.abs(net)}. A compound has a net charge of 0, so add more ions until the charges cancel.`;
-    else if(!B.tiles.every(t=>t.filled.every(Boolean))) st='The charges balance! Now drag the pieces together so every tab fits into a slot.';
-    else st='Keep going!'; }
-  setStatus(st); }
-function record(r){ if(state.found.some(f=>f.key===r.key)){ toast('You already found '+r.disp+'. Try a different combination!'); return; }
-  state.found.push({key:r.key,cat:r.cat,an:r.an,fc:r.fc,fa:r.fa,disp:r.disp}); save(); renderFound();
-  if(state.found.length===6) toast('🎉 Six formulas found! Tab 2 is unlocked: now learn to name them.'); else toast(`✓ New formula: ${r.disp} (${state.found.length}/6)`); }
-function renderFound(){ const n=state.found.length; $('#foundCount').textContent=Math.min(6,n);
-  $('#found').innerHTML=Array.from({length:Math.max(6,n)},(_,i)=>{ const f=state.found[i]; return `<div class="slot ${f?'on':''}">${f?f.disp:'?'}</div>`; }).join('');
-  const open=n>=6; $('#tab2').classList.toggle('locked',!open); $('#tab2nm').textContent=(open?'':'🔒 ')+'Name Them'; }
+/* ======================= builder component (table + workshop) ======================= */
+function makeBuilder(root,mode,cfg){ const multi=mode==='multi';
+  root.innerHTML=`<div class="card"><h2>Step 1 · Pick ions from the periodic table</h2>
+      <div class="ptwrap"><div class="ptinner"><div class="gh"></div><div class="ptgrid"></div></div></div>
+      <div class="hint" style="margin-top:6px">${multi?'Tap a metal and choose its charge, then tap a nonmetal. Tap the same element again to get another piece.':'Tap an element to bring its ion to the workshop below. Tap the same element again to get another one. Hydrogen is grey because it can be 1+ <i>or</i> 1−.'}</div></div>
+    <div class="card"><h2>Step 2 · Assemble the compound</h2>
+      <div class="chooser"></div>
+      <div class="wtop"><div class="sel"></div><div class="net idle"><div class="lab">Net<br>charge</div><div class="val">0</div></div></div>
+      <div class="stagewrap"><canvas class="bench"></canvas></div>
+      <div class="status"></div><div class="note2"></div>
+      <div class="rowbtns"><button class="btn cat bd-addcat">+ Add another cation</button><button class="btn an bd-addan">+ Add another anion</button>
+      <button class="btn secondary bd-apart">Take it apart</button><button class="btn secondary bd-clear">Clear</button></div></div>
+    <div class="bd-after"></div>`;
+  buildTable(root,mode);
+  const q=s=>root.querySelector(s); const bd={root,mode};
+  const hooks={ emptyText:multi?'Tap a metal, choose its charge, then tap a nonmetal':undefined,
+    onNeed:kind=>{ bd.setStatus(kind==='cat'?(multi?'Pick a metal (orange) and its charge first.':'Pick a cation (orange element) from the table first.'):'Pick an anion (green element) from the table first.'); },
+    onChange:(B,net,count)=>{ const el=q('.net'),v=q('.net .val'); v.textContent=B.tiles.length?(net>0?'+'+net:net<0?'−'+Math.abs(net):'0'):'0';
+      el.className='net '+(!B.tiles.length?'idle':net>0?'pos':net<0?'neg':'zero');
+      q('.sel').innerHTML=(B.cat?`Cation: <b style="color:var(--cat)">${ionTxt(B.cat.sym,B.cat.q,true)}</b> (${NAMES[B.cat.sym]}) ×${count('cat')}`:'<span class="muted">Cation: none yet</span>')+'<br>'+
+        (B.an?`Anion: <b style="color:var(--an)">${ionTxt(B.an.sym,B.an.q,false)}</b> (${NAMES[B.an.sym]}) ×${count('an')}`:'<span class="muted">Anion: none yet</span>');
+      const r=B.result; let st;
+      if(r) st=`✓ Every tab fits a slot and the charges cancel (net 0). The formula is ${r.disp}.`+(r.g>1?` You used ${r.g} formula units, and the formula always shows the simplest ratio.`:'');
+      else if(!B.cat&&!B.an) st=multi?'Tap a metal (orange) and choose its charge, then tap a nonmetal (green).':'Tap a cation (orange) and an anion (green) in the periodic table to start.';
+      else if(!B.cat) st=multi?'Now pick a metal (orange) and its charge.':'Now pick a cation (orange element) from the table.';
+      else if(!B.an) st='Now pick an anion (green element) from the table.';
+      else if(net!==0) st=`The net charge is ${net>0?'+':'−'}${Math.abs(net)}. A compound has a net charge of 0, so add more ions until the charges cancel.`;
+      else if(!B.tiles.every(t=>t.filled.every(Boolean))) st='The charges balance! Now drag the pieces together so every tab fits into a slot.';
+      else st='Keep going!';
+      bd.setStatus(st); },
+    onComplete:r=>cfg.onComplete&&cfg.onComplete(r,bd) };
+  bd.setStatus=s=>{ q('.status').textContent=s; }; bd.setNote=s=>{ q('.note2').textContent=s||''; };
+  bd.bench=makeBench(q('canvas.bench'),hooks);
+  bd.chooser=sym=>{ const c=q('.chooser'); if(!sym){ c.classList.remove('show'); return; } c.classList.add('show');
+    c.innerHTML=`<span>Which charge does <b style="color:var(--cat)">${NAMES[sym]}</b> have in this compound?</span>`+MULTI[sym].map(z=>`<button class="btn cat" data-q="${z}">${ionTxt(sym,z,true)}</button>`).join('');
+    c.querySelectorAll('button').forEach(b=>b.onclick=()=>{ c.classList.remove('show'); cfg.onCharge(sym,+b.dataset.q,bd); }); };
+  q('.ptgrid').addEventListener('click',e=>{ const b=e.target.closest('button.el'); if(b) cfg.onPick(b.dataset.s,bd); });
+  q('.bd-addcat').onclick=()=>bd.bench.addMore('cat'); q('.bd-addan').onclick=()=>bd.bench.addMore('an');
+  q('.bd-apart').onclick=()=>bd.bench.apart(); q('.bd-clear').onclick=()=>{ bd.chooser(null); bd.bench.clear(); cfg.onClear&&cfg.onClear(bd); };
+  bd.bench.change(); return bd; }
 
-/* ======================= naming tab ======================= */
-const N={ex:null,step:0,timer:null,tm:null};
-const STEPS=6;
+/* ---- Tab 1 builder (single-charge ions) ---- */
+const B1=makeBuilder($('#view1'),'single',{
+  onPick(sym,bd){ const b=bd.bench,B=b.B; if(CAT[sym]){ if(B.cat&&B.cat.sym===sym) b.addMore('cat'); else b.setIon('cat',sym,CAT[sym]); }
+    else if(AN[sym]){ if(B.an&&B.an.sym===sym) b.addMore('an'); else b.setIon('an',sym,AN[sym]); } },
+  onComplete(r){ const key=r.key; if(state.found.some(f=>f.key===key)){ toast('You already found '+r.disp+'. Try a different combination!'); return; }
+    state.found.push({key,cat:r.cat,an:r.an,fc:r.fc,fa:r.fa,disp:r.disp}); save(); renderFound(); renderTabs();
+    if(state.found.length===6) toast('🎉 Six formulas found! Tab 2 is unlocked: now learn to name them.'); else toast(`✓ New formula: ${r.disp} (${state.found.length}/6)`); }});
+B1.root.querySelector('.bd-after').innerHTML=`<div class="card"><h2>Formulas you've discovered (find 6)</h2><div class="found" id="found"></div>
+  <div class="hint" style="margin-top:8px">Try different combinations: some need one of each ion, and some need more than one of an ion to cancel the charges.</div></div>`;
+function renderFound(){ const n=state.found.length; $('#found').innerHTML=Array.from({length:Math.max(6,n)},(_,i)=>{ const f=state.found[i]; return `<div class="slot ${f?'on':''}">${f?f.disp:'?'}</div>`; }).join(''); }
+
+/* ---- Tab 4 builder (multi-charge metals; each pair needs both charges) ---- */
+const M2={phase:'pick',first:null};
+const B2=makeBuilder($('#view4'),'multi',{
+  onPick(sym,bd){ if(M2.phase==='second'){ toast('Finish this compound first. It uses the same metal with its other charge.'); return; }
+    const b=bd.bench,B=b.B;
+    if(MULTI[sym]){ bd.chooser(sym); }
+    else if(AN[sym]){ if(B.an&&B.an.sym===sym) b.addMore('an'); else b.setIon('an',sym,AN[sym]); } },
+  onCharge(sym,q,bd){ const b=bd.bench,B=b.B; if(B.cat&&B.cat.sym===sym&&B.cat.q===q) b.addMore('cat'); else b.setIon('cat',sym,q); },
+  onClear(bd){ M2.phase='pick'; M2.first=null; bd.setNote(''); },
+  onComplete(r,bd){ const b=bd.bench;
+    if(M2.phase==='pick'){ if(state.pairs.some(p=>p.key===r.cat+r.an)){ toast(`You already made both ${NAMES[r.cat]} ${aName(r.an)} compounds. Try a different pair!`); return; }
+      M2.phase='second'; M2.first=r; const q2=MULTI[r.cat].find(x=>x!==r.qc);
+      bd.setNote(`✓ ${r.disp} is done (${ionTxt(r.cat,r.qc,true)}). Get ready: ${NAMES[r.cat]} can also have a different charge…`);
+      setTimeout(()=>{ if(M2.phase!=='second'||M2.first!==r) return; b.clear(); b.setIon('cat',r.cat,q2); b.setIon('an',r.an,AN[r.an]);
+        bd.setNote(`Second charge: now build the compound with ${ionTxt(r.cat,q2,true)} and the same anion, ${ionTxt(r.an,AN[r.an],false)}. What formula do you get?`); },2400); }
+    else if(M2.phase==='second'&&M2.first&&r.cat===M2.first.cat&&r.an===M2.first.an&&r.qc!==M2.first.qc){
+      const a=mkCmp(r.cat,M2.first.qc,r.an),c=mkCmp(r.cat,r.qc,r.an);
+      state.pairs.push({key:r.cat+r.an,metal:r.cat,an:r.an,items:[a,c]}); save(); renderPairs(); renderTabs();
+      toast(state.pairs.length>=3?'🎉 Three pairs done! Tab 5 is unlocked: name them with Roman numerals.':`✓ Pair complete: ${a.disp} and ${c.disp} (${state.pairs.length}/3)`);
+      M2.phase='pick'; M2.first=null; bd.setNote('Pair complete! Pick another metal and nonmetal for your next pair.');
+      setTimeout(()=>{ if(M2.phase==='pick'){ b.clear(); } },2400); } }});
+B2.root.querySelector('.bd-after').innerHTML=`<div class="card"><h2>Pairs you've completed (do 3)</h2><div class="found three" id="pairs"></div>
+  <div class="hint" style="margin-top:8px">Each pair uses the same two elements, with the metal in two different charges. After you build one, you'll automatically get the metal's other charge.</div></div>`;
+function renderPairs(){ const n=state.pairs.length; $('#pairs').innerHTML=Array.from({length:Math.max(3,n)},(_,i)=>{ const p=state.pairs[i]; return `<div class="slot ${p?'on':''}">${p?p.items[0].disp+' &nbsp;·&nbsp; '+p.items[1].disp+`<small>${p.metal} + ${p.an}</small>`:'?'}</div>`; }).join(''); }
+
+/* ======================= generic stepper ======================= */
+const STEPPERS=[];
+function stepper(cfg){ const S={step:0,timer:null}; STEPPERS.push(S);
+  S.label=()=>{ $(cfg.btns.play).textContent=S.timer?'⏸ Pause':(S.step===cfg.steps-1?'▶ Play again':'▶ Play'); };
+  S.go=(n,anim)=>{ const prev=S.step; S.step=clamp(n,0,cfg.steps-1); cfg.apply(S.step,anim,prev); $(cfg.btns.back).disabled=S.step===0; $(cfg.btns.next).disabled=S.step===cfg.steps-1; S.label();
+    $(cfg.dots).innerHTML=Array.from({length:cfg.steps},(_,i)=>`<i class="${i===S.step?'on':i<S.step?'past':''}"></i>`).join(''); };
+  S.stop=()=>{ clearInterval(S.timer); S.timer=null; S.label(); };
+  S.play=()=>{ if(S.timer){ S.stop(); return; } if(S.step>=cfg.steps-1) S.go(0,false);
+    S.timer=setInterval(()=>{ if(S.step>=cfg.steps-1){ S.stop(); return; } S.go(S.step+1,true); },cfg.ms||3800); S.go(S.step+1,true); };
+  S.reset=()=>{ S.stop(); S.step=0; S.go(0,false); };
+  $(cfg.btns.back).onclick=()=>{ S.stop(); S.go(S.step-1,false); }; $(cfg.btns.next).onclick=()=>{ S.stop(); S.go(S.step+1,true); };
+  $(cfg.btns.replay).onclick=()=>{ S.stop(); S.go(0,false); }; $(cfg.btns.play).onclick=S.play; return S; }
+function stopAllPlay(){ STEPPERS.forEach(s=>s.stop()); stopPlay(); }
+function fly(from,to,text,color,cb){ if(!from||!to||!from.animate){ cb&&cb(); return; } const a=from.getBoundingClientRect(),b=to.getBoundingClientRect(); const d=document.createElement('div');
+  d.className='fly'; d.textContent=text; d.style.cssText=`left:${a.left}px;top:${a.top}px;width:${a.width}px;height:${a.height}px;color:${color};font-size:${getComputedStyle(from).fontSize}`;
+  document.body.appendChild(d); const s=b.width/Math.max(1,a.width);
+  const an=d.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${b.left-a.left}px,${b.top-a.top}px) scale(${s})`,opacity:.9}],{duration:800,easing:'cubic-bezier(.3,.7,.3,1)'});
+  an.onfinish=()=>{ d.remove(); cb&&cb(); }; an.oncancel=()=>{ d.remove(); cb&&cb(); }; }
+
+/* ======================= TAB 2: naming (single charge) ======================= */
+const N={ex:null,step:0,timer:null,tm:null,prevStep:0};
+const NSTEPS=6;
 const EXAMPLES=[['Na','Cl'],['K','Br'],['Li','F'],['Mg','O'],['Ca','S'],['Ba','I'],['Al','N'],['Zn','S'],['Ag','Cl'],['Sr','F'],['Cs','I'],['Be','O'],['Ga','P'],['Rb','Se'],['Al','S'],['Ca','Cl'],['K','O']];
-function mkEx(c,a){ const cq=CAT[c],aq=AN[a],l=cq*aq/gcd(cq,aq),fc=l/cq,fa=l/aq; return {cat:c,an:a,fc,fa,disp:c+sub(fc)+a+sub(fa),key:c+fc+a+fa}; }
+function mkEx(c,a){ const cq=CAT[c],aq=AN[a],l=lcm(cq,aq),fc=l/cq,fa=l/aq; return {cat:c,an:a,fc,fa,disp:c+sub(fc)+a+sub(fa),key:c+fc+a+fa}; }
 function nextExample(){ const isNew=e=>!state.found.some(f=>f.key===e.key)&&(!N.ex||e.key!==N.ex.key);
   let pool=EXAMPLES.map(([c,a])=>mkEx(c,a)).filter(isNew);
   if(!pool.length) pool=Object.keys(CAT).flatMap(c=>Object.keys(AN).map(a=>mkEx(c,a))).filter(isNew);
   N.ex=pool[Math.floor(Math.random()*pool.length)]||N.ex; }
-const nmData=()=>N.ex;
 function nmReset(){ stopPlay(); N.step=0; N.prevStep=0; nmFill(); nmApply(0,false); }
-function nmFill(){ const f=nmData(); if(!f) return; const [stem,end]=STEM[f.an];
+function nmFill(){ const f=N.ex; if(!f) return; const [stem,end]=STEM[f.an];
   $('#pCat').textContent=f.cat; $('#pCatSub').textContent=f.fc>1?sub(f.fc):''; $('#pAn').textContent=f.an; $('#pAnSub').textContent=f.fa>1?sub(f.fa):'';
   $('#pCatSub').style.display=f.fc>1?'':'none'; $('#pAnSub').style.display=f.fa>1?'':'none';
-  $('#nCat').textContent=NAMES[f.cat].toLowerCase(); $('#nStem').textContent=stem; $('#nEnd').textContent=end; }
-function caption(step,f){ const [stem,end]=STEM[f.an],cn=NAMES[f.cat].toLowerCase(),an=NAMES[f.an].toLowerCase(),subs=f.fc>1||f.fa>1;
+  $('#nCat').textContent=mName(f.cat); $('#nStem').textContent=stem; $('#nEnd').textContent=end; }
+function caption(step,f){ const [stem,end]=STEM[f.an],cn=mName(f.cat),an=NAMES[f.an].toLowerCase(),subs=f.fc>1||f.fa>1;
   return [
    `Here is a compound you did not build: <b>${f.disp}</b>. Let's build its name one piece at a time.`,
    `<b>Step 1:</b> Name the metal first. <span class="c1">${f.cat}</span> is <span class="c1">${cn}</span>. Write the metal's name exactly as it is.`,
@@ -436,36 +597,24 @@ function caption(step,f){ const [stem,end]=STEM[f.an],cn=NAMES[f.cat].toLowerCas
    `<b>Step 3:</b> Drop the ending of the nonmetal's name: take the <span class="cr">-${end}</span> off ${an}, and <span class="c2">${stem}</span> is left.`,
    `<b>Step 4:</b> Add <b>-ide</b> to the end: <span class="c2">${stem}</span> + <b>ide</b> = <span class="c2">${stem}ide</span>.`,
    `<b>Step 5:</b> Put the two names together, metal first: <span class="c1">${cn}</span> <span class="c2">${stem}ide</span>. `+(subs?`The subscripts (<span class="c3">${[f.fc>1?f.fc:'',f.fa>1?f.fa:''].filter(Boolean).join(' and ')}</span>) tell you how many of each ion, but they do <b>not</b> go in the name.`:`There are no subscripts here, and subscripts never go in the name anyway.`)][step]; }
-function nmApply(step,animate){ const f=nmData(); if(!f) return; const hl=(id,on)=>$(id).classList.toggle('hl',on), dim=(id,on)=>$(id).classList.toggle('dim',on);
-  const catOn=step===1||step===5, anOn=step>=2&&step<=5&&true, subOn=step===5;
-  hl('#pCat',catOn); hl('#pAn',step>=2&&step<=4||step===5); hl('#pCatSub',subOn&&f.fc>1); hl('#pAnSub',subOn&&f.fa>1);
+function nmApply(step,animate){ const f=N.ex; if(!f) return; const hl=(id,on)=>$(id).classList.toggle('hl',on), dim=(id,on)=>$(id).classList.toggle('dim',on);
+  hl('#pCat',step===1||step===5); hl('#pAn',step>=2&&step<=5); hl('#pCatSub',step===5&&f.fc>1); hl('#pAnSub',step===5&&f.fa>1);
   dim('#pCat',step>=2&&step<=4); dim('#pAn',step===1); dim('#pCatSub',step>=1&&step<=4); dim('#pAnSub',step>=1&&step<=4);
-  const showCat=step>=1,showAn=step>=2;
-  const prev=N.prevStep===undefined?0:N.prevStep;
-  const flyCat=animate&&step===1&&prev===0, flyAn=animate&&step===2&&prev===1;
-  const setVis=(id,on)=>$(id).classList.toggle('vis',on);
-  if(flyCat){ setVis('#nCat',false); fly($('#pCat'),$('#nCat'),f.cat,'#ffb066',()=>{ if(N.step>=1) setVis('#nCat',true); }); } else setVis('#nCat',showCat);
-  if(flyAn){ setVis('#nAn',false); fly($('#pAn'),$('#nAn'),f.an,'#5be0a0',()=>{ if(N.step>=2) setVis('#nAn',true); }); } else setVis('#nAn',showAn);
-  const endEl=$('#nEnd'); clearTimeout(N.tm);
-  endEl.classList.toggle('strike',step===3); endEl.classList.toggle('gone',step>=4);
+  const prev=N.prevStep===undefined?0:N.prevStep, setVis=(id,on)=>$(id).classList.toggle('vis',on);
+  if(animate&&step===1&&prev===0){ setVis('#nCat',false); fly($('#pCat'),$('#nCat'),f.cat,'#ffb066',()=>{ if(N.step>=1) setVis('#nCat',true); }); } else setVis('#nCat',step>=1);
+  if(animate&&step===2&&prev===1){ setVis('#nAn',false); fly($('#pAn'),$('#nAn'),f.an,'#5be0a0',()=>{ if(N.step>=2) setVis('#nAn',true); }); } else setVis('#nAn',step>=2);
+  const endEl=$('#nEnd'); clearTimeout(N.tm); endEl.classList.toggle('strike',step===3); endEl.classList.toggle('gone',step>=4);
   if(step===3) N.tm=setTimeout(()=>{ if(N.step===3) $('#nEnd').classList.add('gone'); },1500);
-  $('#nIde').classList.toggle('vis',step>=4);
-  $('#nRow').classList.toggle('done',step===5);
+  $('#nIde').classList.toggle('vis',step>=4); $('#nRow').classList.toggle('done',step===5);
   $('#nmCap').innerHTML=caption(step,f);
-  $('#nmDots').innerHTML=Array.from({length:STEPS},(_,i)=>`<i class="${i===step?'on':i<step?'past':''}"></i>`).join('');
-  $('#nmBack').disabled=step===0; $('#nmNext').disabled=step===STEPS-1;
-  $('#nmPlay').textContent=N.timer?'⏸ Pause':(step===STEPS-1?'▶ Play again':'▶ Play');
+  $('#nmDots').innerHTML=Array.from({length:NSTEPS},(_,i)=>`<i class="${i===step?'on':i<step?'past':''}"></i>`).join('');
+  $('#nmBack').disabled=step===0; $('#nmNext').disabled=step===NSTEPS-1; $('#nmPlay').textContent=N.timer?'⏸ Pause':(step===NSTEPS-1?'▶ Play again':'▶ Play');
   N.prevStep=step; }
-function fly(from,to,text,color,cb){ if(!from.animate){ cb&&cb(); return; } const a=from.getBoundingClientRect(),b=to.getBoundingClientRect(); const d=document.createElement('div');
-  d.className='fly'; d.textContent=text; d.style.cssText=`left:${a.left}px;top:${a.top}px;width:${a.width}px;height:${a.height}px;color:${color};font-size:${getComputedStyle(from).fontSize}`;
-  document.body.appendChild(d); const s=b.width/Math.max(1,a.width);
-  const an=d.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${b.left-a.left}px,${b.top-a.top}px) scale(${s})`,opacity:.9}],{duration:800,easing:'cubic-bezier(.3,.7,.3,1)'});
-  an.onfinish=()=>{ d.remove(); cb&&cb(); }; an.oncancel=()=>{ d.remove(); cb&&cb(); }; }
-function go(step,animate){ N.step=clamp(step,0,STEPS-1); nmApply(N.step,animate); }
+function go(step,animate){ N.step=clamp(step,0,NSTEPS-1); nmApply(N.step,animate); }
 function stopPlay(){ clearInterval(N.timer); N.timer=null; }
 function play(){ if(N.timer){ stopPlay(); nmApply(N.step,false); return; }
-  if(N.step>=STEPS-1){ N.prevStep=0; go(0,false); }
-  N.timer=setInterval(()=>{ if(N.step>=STEPS-1){ stopPlay(); nmApply(N.step,false); return; } go(N.step+1,true); },3600);
+  if(N.step>=NSTEPS-1){ N.prevStep=0; go(0,false); }
+  N.timer=setInterval(()=>{ if(N.step>=NSTEPS-1){ stopPlay(); nmApply(N.step,false); return; } go(N.step+1,true); },3600);
   go(N.step+1,true); }
 $('#nmBack').onclick=()=>{ stopPlay(); go(N.step-1,false); };
 $('#nmNext').onclick=()=>{ stopPlay(); go(N.step+1,true); };
@@ -474,43 +623,131 @@ $('#nmPlay').onclick=play;
 function showNaming(){ if(state.found.length<6) return; if(!N.ex) nextExample(); nmReset(); renderPractice(); }
 $('#nmOther').onclick=()=>{ nextExample(); nmReset(); };
 
-/* ---- typed practice: metal / nonmetal / compound boxes with checking ---- */
-const ALT={aluminum:'aluminium',cesium:'caesium',sulfide:'sulphide'};
+/* ---- typed practice (single charge): metal / nonmetal / compound ---- */
+const ALT={aluminum:'aluminium',cesium:'caesium',sulfide:'sulphide',sulfur:'sulphur'};
 const norm=t=>t.trim().toLowerCase().replace(/\s+/g,' ');
 function same(val,exp){ const v=norm(val); if(v===exp) return true; let e2=exp; for(const k in ALT) e2=e2.split(k).join(ALT[k]); return v===e2; }
-const named=()=>(state.named=state.named||{});
-const tries={};
 const ATTR='autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"';
-function cardHTML(f){ const done=!!named()[f.key],m=NAMES[f.cat].toLowerCase(),n=STEM[f.an][0]+'ide';
+const tries={};
+function peek(word,k){ return `It starts with “${word.slice(0,Math.min(word.length-1,2+k))}…”.`; }
+function cardHTML(f){ const done=!!state.named[f.key],m=mName(f.cat),n=aName(f.an);
   return `<div class="pcard ${done?'done':''}" data-k="${f.key}"><div class="pf">${f.disp}${done?'<span class="tick">✓</span>':''}</div>
     <div class="prow"><label>Metal Name<input data-f="m" value="${done?m:''}" ${done?'readonly':''} ${ATTR}></label>
     <label>Nonmetal Name<input data-f="n" value="${done?n:''}" ${done?'readonly':''} ${ATTR}></label></div>
     <label class="pwide">Compound Name<input data-f="c" value="${done?m+' '+n:''}" ${done?'readonly':''} ${ATTR}></label>
     <div class="pact">${done?'':'<button class="btn">Check</button>'}</div><div class="pfb ${done?'ok':''}">${done?'✓ Correct! '+m+' '+n:''}</div></div>`; }
-function wireCard(card){ if(card.classList.contains('done')) return; const chk=()=>checkCard(card); card.querySelector('.btn').onclick=chk;
+function wireCard(card,fn){ if(card.classList.contains('done')) return; const chk=()=>fn(card); card.querySelector('.btn').onclick=chk;
   card.querySelectorAll('input').forEach(i=>i.addEventListener('keydown',e=>{ if(e.key==='Enter') chk(); })); }
-function updateNamed(){ const list=state.found,n=list.filter(f=>named()[f.key]).length; $('#namedCount').textContent=`(${n}/${list.length} named)`;
-  $('#allNamed').textContent=n===list.length&&n>0?'🎉 You named every compound you discovered!':''; }
-function renderPractice(){ $('#practice').innerHTML=state.found.map(cardHTML).join(''); $('#practice').querySelectorAll('.pcard').forEach(wireCard); updateNamed(); }
-function peek(word,k){ return `It starts with “${word.slice(0,Math.min(word.length-1,2+k))}…”.`; }
-function checkCard(card){ const f=state.found.find(x=>x.key===card.dataset.k); const t=tries[f.key]=(tries[f.key]||0)+1; const [stem,end]=STEM[f.an];
-  const m=NAMES[f.cat].toLowerCase(),n=stem+'ide',c=m+' '+n; const inp={}; card.querySelectorAll('input').forEach(i=>inp[i.dataset.f]=i);
-  const fb=[]; const mark=(i,ok)=>{ i.classList.toggle('good',ok); i.classList.toggle('bad',!ok); };
+function updateNamed(){ const list=state.found,n=namedCount(); $('#namedCount').textContent=`(${n}/${list.length} named)`;
+  $('#allNamed').textContent=n===list.length&&n>0?'🎉 You named every compound you discovered! Tab 3 is unlocked.':''; renderTabs(); }
+function renderPractice(){ $('#practice').innerHTML=state.found.map(cardHTML).join(''); $('#practice').querySelectorAll('.pcard').forEach(c=>wireCard(c,checkCard)); updateNamed(); }
+function checkCard(card){ const f=state.found.find(x=>x.key===card.dataset.k); const t=tries[f.key]=(tries[f.key]||0)+1; const [stem]=STEM[f.an];
+  const m=mName(f.cat),n=aName(f.an),c=m+' '+n; const inp={}; card.querySelectorAll('input').forEach(i=>inp[i.dataset.f]=i);
+  const fb=[],mark=(i,ok)=>{ i.classList.toggle('good',ok); i.classList.toggle('bad',!ok); };
   const vm=norm(inp.m.value),vn=norm(inp.n.value),vc=norm(inp.c.value);
-  const okM=same(inp.m.value,m),okN=same(inp.n.value,n),okC=same(inp.c.value,c);
-  mark(inp.m,okM); mark(inp.n,okN); mark(inp.c,okC);
+  const okM=same(inp.m.value,m),okN=same(inp.n.value,n),okC=same(inp.c.value,c); mark(inp.m,okM); mark(inp.n,okN); mark(inp.c,okC);
   if(!okM){ if(!vm) fb.push('Type the metal\'s name.'); else if(vm===f.cat.toLowerCase()) fb.push('Write the metal\'s full name, not its symbol.'); else fb.push(`The metal is ${f.cat}. Write its name exactly as the periodic table does.${t>2?' '+peek(m,t-3):''}`); }
   if(!okN){ if(!vn) fb.push('Type the nonmetal\'s name with the -ide ending.'); else if(vn===NAMES[f.an].toLowerCase()) fb.push('That is the element\'s name. Drop its ending and add -ide.'); else if(vn===stem) fb.push('Almost! Don\'t forget the -ide ending.'); else if(vn===f.an.toLowerCase()) fb.push('Write the full name, not the symbol.'); else fb.push(`The nonmetal is ${f.an}. Take its name, drop the ending, and add -ide.${t>2?' '+peek(n,t-3):''}`); }
   if(!okC){ if(!vc) fb.push('Type the whole compound name.'); else if(okM&&okN) fb.push('Put the metal name first, then the nonmetal name, with a space between.'); else fb.push('Fix the two boxes above first, then combine them: metal name, space, nonmetal name.'); }
-  const fbEl=card.querySelector('.pfb');
-  if(okM&&okN&&okC){ named()[f.key]=true; save(); const t=document.createElement('div'); t.innerHTML=cardHTML(f); const nc=t.firstElementChild; card.replaceWith(nc); updateNamed(); toast('✓ '+f.disp+' is '+c); return; }
-  fbEl.className='pfb'; fbEl.innerHTML=fb.map(x=>'• '+x).join('<br>'); }
+  if(okM&&okN&&okC){ state.named[f.key]=true; save(); const tmp=document.createElement('div'); tmp.innerHTML=cardHTML(f); card.replaceWith(tmp.firstElementChild); updateNamed(); toast('✓ '+f.disp+' is '+c); return; }
+  const fbEl=card.querySelector('.pfb'); fbEl.className='pfb'; fbEl.innerHTML=fb.map(x=>'• '+x).join('<br>'); }
 
-/* ======================= tabs + scroll strip ======================= */
-function showTab(n){ if(n===2&&state.found.length<6){ toast(`Find six formulas in Tab 1 first (${state.found.length}/6).`); return; }
-  $('#view1').style.display=n===1?'':'none'; $('#view2').style.display=n===2?'':'none';
-  $('#tab1').classList.toggle('sel',n===1); $('#tab2').classList.toggle('sel',n===2); window.scrollTo(0,0); if(n===2) showNaming(); else { stopPlay(); resize(); } }
-$('#tab1').onclick=()=>showTab(1); $('#tab2').onclick=()=>showTab(2);
+/* ======================= TAB 3: why we need the formula (multi-charge intro) ======================= */
+const IN={ex:null,i:0};
+const EX3=[['Sn','O'],['Fe','O'],['Cu','Cl'],['Pb','S']];
+function mkLanes(m,an){ const [q1,q2]=MULTI[m]; return [mkCmp(m,q1,an),mkCmp(m,q2,an)]; }
+function ionChips(c){ return Array.from({length:c.fc},()=>`<span class="ion c">${ionTxt(c.metal,c.q,true)}</span>`).join('')+Array.from({length:c.fa},()=>`<span class="ion a">${ionTxt(c.an,c.qa,false)}</span>`).join(''); }
+function setIntroExample(i){ IN.i=i; const [m,an]=EX3[i]; IN.ex={m,an,lanes:mkLanes(m,an)}; const e=IN.ex;
+  $('#iM').textContent=m; $('#iA').textContent=an;
+  [['A',0],['B',1]].forEach(([L,k])=>{ const c=e.lanes[k]; $('#lt'+L).textContent=`If ${mName(m)} has a ${c.q}+ charge`; $('#ions'+L).innerHTML=ionChips(c); $('#form'+L).textContent=c.disp; $('#name'+L).innerHTML=''; $('#lane'+L).classList.remove('vis'); }); }
+function introNameHTML(c,step){ const w1=mName(c.metal),w2=aName(c.an);
+  if(step<4) return ''; if(step===4) return `<span class="w1">${w1}</span> <span class="w2">${w2}</span> <span class="qmark">?</span>`;
+  return `<span class="w1">${w1}</span><span class="rom vis">(${ROMAN[c.q]})</span> <span class="w2">${w2}</span>`; }
+function introCaption(step,e){ const [a,b]=e.lanes,m=mName(e.m),o=NAMES[e.an].toLowerCase();
+  return [
+   `In Tabs 1 and 2 every metal had just <b>one</b> possible charge. But many metals, like the <span class="c1">transition metals</span> and a few others such as <span class="c1">tin</span> and <span class="c1">lead</span>, can form <b>more than one</b> kind of ion.`,
+   `So what happens when we combine <span class="c1">${m}</span> with <span class="c2">${o}</span>? What is the formula?`,
+   `<b>One possibility:</b> ${m} loses ${a.q} electron${a.q>1?'s':''} to become <span class="c1">${ionTxt(e.m,a.q,true)}</span>. The charges cancel with ${a.fc>1?a.fc+' of them and ':''}${a.fa} <span class="c2">${ionTxt(e.an,a.qa,false)}</span>, so the formula is <b>${a.disp}</b>.`,
+   `<b>Another possibility:</b> ${m} loses ${b.q} electrons to become <span class="c1">${ionTxt(e.m,b.q,true)}</span>. Now it balances with ${b.fc>1?b.fc+' of them and ':''}${b.fa} <span class="c2">${ionTxt(e.an,b.qa,false)}</span>, so the formula is <b>${b.disp}</b>.`,
+   `The <b>same two elements</b> make <b>two different compounds</b>. If we only said “${m} ${aName(e.an)}”, nobody could tell whether we meant <b>${a.disp}</b> or <b>${b.disp}</b>.`,
+   `So the name must tell us the metal's charge. We write it as a <span class="c3">Roman numeral</span> in parentheses right after the metal's name: <b>${m}(${ROMAN[a.q]}) ${aName(e.an)}</b> and <b>${m}(${ROMAN[b.q]}) ${aName(e.an)}</b>.`,
+   `That's why for these metals we need the <b>actual formula</b>, not just the two elements: the formula lets us work out the metal's charge. <span class="c3">${ROMAN[a.q]}</span> means ${a.q}+ and <span class="c3">${ROMAN[b.q]}</span> means ${b.q}+. Now build some of these compounds yourself!`][step]; }
+const ST3=stepper({steps:7,ms:4200,dots:'#iDots',btns:{back:'#iBack',play:'#iPlay',next:'#iNext',replay:'#iReplay'},
+  apply(step,anim,prev){ const e=IN.ex; if(!e) return; const [a,b]=e.lanes;
+    $('#mlist').classList.toggle('hl',step===0); $('#iEl').classList.toggle('vis',step>=1);
+    $('#laneA').classList.toggle('vis',step>=2); $('#laneB').classList.toggle('vis',step>=3);
+    $('#nameA').innerHTML=introNameHTML(a,step); $('#nameB').innerHTML=introNameHTML(b,step);
+    if(anim&&step===5&&prev===4){ document.querySelectorAll('#nameA .rom,#nameB .rom').forEach((r,k)=>{ r.classList.remove('vis'); const chip=document.querySelector(k?'#ionsB .ion.c':'#ionsA .ion.c'); fly(chip,r,ROMAN[e.lanes[k].q],'#c3a1ff',()=>r.classList.add('vis')); }); }
+    $('#iCap').innerHTML=introCaption(step,e);
+    document.querySelectorAll('#iRoman .rn').forEach(r=>r.classList.toggle('hl',step>=5&&(+r.dataset.n===a.q||+r.dataset.n===b.q)));
+    if(step===6&&!state.introSeen){ state.introSeen=true; save(); renderTabs(); toast('Tab 4 is unlocked: build multi-charge compounds!'); }
+    $('#iUnlock').textContent=state.introSeen?'✓ Tab 4 is unlocked.':'Watch to the last step to unlock Tab 4.'; }});
+$('#iOther').onclick=()=>{ setIntroExample((IN.i+1)%EX3.length); ST3.reset(); };
+function showIntro(){ if(!IN.ex) setIntroExample(0); ST3.reset(); }
+$('#mlist').innerHTML=Object.keys(MULTI).map(s=>`<div class="mi"><b>${s}</b><span>${MULTI[s].join('+ or ')}+</span></div>`).join('');
+$('#iRoman').innerHTML=ROMAN.slice(1).map((r,i)=>`<div class="rn" data-n="${i+1}">${r}<small>${i+1}</small></div>`).join('');
+
+/* ======================= TAB 5: Roman numeral naming ======================= */
+const RX=[['Sn','O'],['Fe','S'],['Cu','Br'],['Pb','Cl'],['Cr','O'],['Co','F'],['Mn','O'],['Au','Cl'],['Ti','O'],['Fe','Cl'],['Cu','S'],['Sn','F']];
+const RN={ex:null};
+function nextRomanExample(){ const built=p=>state.pairs.some(x=>x.key===p[0]+p[1]); const pool=RX.filter(p=>!built(p)&&!(RN.ex&&RN.ex.key===p[0]+p[1]));
+  const p=pool.length?pool[Math.floor(Math.random()*pool.length)]:RX[Math.floor(Math.random()*RX.length)]; RN.ex={key:p[0]+p[1],metal:p[0],an:p[1],lanes:mkLanes(p[0],p[1])}; }
+function laneHTML(c,L){ const w1=mName(c.metal),w2=aName(c.an),tot=c.fa*c.qa;
+  return `<div class="lt" style="text-transform:none;font-size:15px;font-weight:700">${c.disp}</div><div class="lform"><span class="fc" id="r${L}fc">${c.metal}${sub(c.fc)}</span><span class="fa" id="r${L}fa">${c.an}${sub(c.fa)}</span></div>
+    <div class="lg" id="r${L}g1">${c.an} is always <b>${c.qa}−</b>, and there ${c.fa>1?'are '+c.fa:'is 1'}: ${c.fa} × ${c.qa}− = <b>${tot}−</b> in total</div>
+    <div class="lg" id="r${L}g2">The compound is neutral, so the ${c.metal} ion${c.fc>1?'s':''} must add up to <b>${tot}+</b></div>
+    <div class="lg" id="r${L}g3">${tot}+ ÷ ${c.fc} ${c.metal} ion${c.fc>1?'s':''} = <b id="r${L}ch">${c.q}+</b> each</div>
+    <div class="lname"><span class="wd" id="r${L}w1"><span class="w1">${w1}</span></span><span class="rom" id="r${L}rom">(${ROMAN[c.q]})</span> <span class="wd" id="r${L}w2"><span class="w2">${w2}</span></span></div>`; }
+function setRomanExample(){ if(!RN.ex) nextRomanExample(); $('#rA').innerHTML=laneHTML(RN.ex.lanes[0],'A'); $('#rB').innerHTML=laneHTML(RN.ex.lanes[1],'B'); }
+function romanCaption(step,e){ const [a,b]=e.lanes,m=mName(e.metal),o=NAMES[e.an].toLowerCase();
+  return [
+   `Here are two compounds made from the <b>same two elements</b>: <b>${a.disp}</b> and <b>${b.disp}</b>. They are different compounds, so they need different names.`,
+   `<b>Step 1:</b> Both start with the metal's name, exactly as before: <span class="c1">${m}</span>.`,
+   `<b>Step 2:</b> To find the metal's charge, start with the nonmetal. <span class="c2">${e.an}</span> is always <span class="c2">${a.qa}−</span>. Multiply by how many there are to get the total negative charge.`,
+   `<b>Step 3:</b> A compound has no net charge, so the metal ions must add up to the <b>same amount of positive</b> charge.`,
+   `<b>Step 4:</b> Share that total among the metal ions. Divide by the number of <span class="c1">${e.metal}</span> in the formula (the subscript) to get the charge of <b>one</b> metal ion.`,
+   `<b>Step 5:</b> Write that charge as a <span class="c3">Roman numeral</span> in parentheses right after the metal's name, with no space: <b>${m}(${ROMAN[a.q]})</b> and <b>${m}(${ROMAN[b.q]})</b>.`,
+   `<b>Step 6:</b> Now name the nonmetal the usual way: drop the ending and add <b>-ide</b>. <span class="c2">${o}</span> becomes <span class="c2">${aName(e.an)}</span>.`,
+   `<b>Done!</b> <b>${m}(${ROMAN[a.q]}) ${aName(e.an)}</b> and <b>${m}(${ROMAN[b.q]}) ${aName(e.an)}</b>. The Roman numeral is the <b>metal's charge</b>, and the subscripts still do not go in the name.`][step]; }
+const ST5=stepper({steps:8,ms:4200,dots:'#rDots',btns:{back:'#rBack',play:'#rPlay',next:'#rNext',replay:'#rReplay'},
+  apply(step,anim,prev){ const e=RN.ex; if(!e) return; const tg=(id,on)=>{ const el=$(id); if(el) el.classList.toggle('vis',on); };
+    ['A','B'].forEach((L,k)=>{ const c=e.lanes[k];
+      $('#r'+L+'fc').classList.toggle('hl',step===1||step===3||step===4||step===5); $('#r'+L+'fa').classList.toggle('hl',step===2||step===6);
+      tg('#r'+L+'w1',step>=1); tg('#r'+L+'g1',step>=2); tg('#r'+L+'g2',step>=3); tg('#r'+L+'g3',step>=4); tg('#r'+L+'w2',step>=6);
+      const rom=$('#r'+L+'rom'); if(anim&&step===5&&prev===4){ rom.classList.remove('vis'); fly($('#r'+L+'ch'),rom,ROMAN[c.q],'#c3a1ff',()=>rom.classList.add('vis')); } else rom.classList.toggle('vis',step>=5); });
+    $('#rLanes').classList.toggle('final',step===7); $('#rCap').innerHTML=romanCaption(step,e); }});
+$('#rOther').onclick=()=>{ nextRomanExample(); setRomanExample(); ST5.reset(); };
+function showRoman(){ nextRomanExample(); setRomanExample(); ST5.reset(); renderPractice2(); }
+
+/* ---- typed practice with Roman numerals ---- */
+function normC(v){ return v.trim().replace(/\s+/g,' ').replace(/\s*\(\s*/,'(').replace(/\s*\)\s*/,') ').replace(/\s+$/,''); }
+function rcardHTML(c){ const done=!!state.named2[c.key],m=mName(c.metal),n=aName(c.an),r=ROMAN[c.q];
+  return `<div class="pcard ${done?'done':''}" data-k="${c.key}"><div class="pf">${c.disp}${done?'<span class="tick">✓</span>':''}</div>
+    <div class="prow3"><label>Metal Name<input data-f="m" value="${done?m:''}" ${done?'readonly':''} ${ATTR}></label>
+    <label>Roman Numeral<input data-f="r" value="${done?r:''}" ${done?'readonly':''} ${ATTR}></label>
+    <label>Nonmetal Name<input data-f="n" value="${done?n:''}" ${done?'readonly':''} ${ATTR}></label></div>
+    <label class="pwide">Compound Name<input data-f="c" value="${done?m+'('+r+') '+n:''}" ${done?'readonly':''} ${ATTR}></label>
+    <div class="pact">${done?'':'<button class="btn">Check</button>'}</div><div class="pfb ${done?'ok':''}">${done?'✓ Correct! '+m+'('+r+') '+n:''}</div></div>`; }
+function updateNamed2(){ const all=state.pairs.flatMap(p=>p.items),n=all.filter(c=>state.named2[c.key]).length; $('#named2Count').textContent=`(${n}/${all.length} named)`;
+  $('#all2Named').textContent=n===all.length&&n>0?'🎉 You named every compound in every pair!':''; }
+function renderPractice2(){ $('#practice2').innerHTML=state.pairs.map(p=>`<div class="pair"><div class="ptitle">${NAMES[p.metal]} + ${NAMES[p.an].toLowerCase()}: same elements, two compounds</div><div class="pgrid2">${p.items.map(rcardHTML).join('')}</div></div>`).join('');
+  $('#practice2').querySelectorAll('.pcard').forEach(c=>wireCard(c,checkRoman)); updateNamed2(); }
+function checkRoman(card){ const c=state.pairs.flatMap(p=>p.items).find(x=>x.key===card.dataset.k); const t=tries[c.key]=(tries[c.key]||0)+1;
+  const m=mName(c.metal),n=aName(c.an),r=ROMAN[c.q],full=`${m}(${r}) ${n}`,inp={}; card.querySelectorAll('input').forEach(i=>inp[i.dataset.f]=i);
+  const mark=(i,ok)=>{ i.classList.toggle('good',ok); i.classList.toggle('bad',!ok); }, fb=[];
+  const okM=same(inp.m.value,m),okN=same(inp.n.value,n),vr=inp.r.value.trim(),okR=vr===r;
+  const cv=normC(inp.c.value),rm=cv.match(/\(([^)]*)\)/),lowParen=s=>s.replace(/\(([^)]*)\)/,x=>x.toLowerCase()),okC=same(lowParen(cv),lowParen(full))&&!!rm&&rm[1]===r;
+  mark(inp.m,okM); mark(inp.r,okR); mark(inp.n,okN); mark(inp.c,okC);
+  const vm=norm(inp.m.value),vn=norm(inp.n.value),tot=c.fa*c.qa;
+  if(!okM){ if(!vm) fb.push('Type the metal\'s name.'); else if(vm===c.metal.toLowerCase()) fb.push('Write the metal\'s full name, not its symbol.'); else fb.push(`The metal is ${c.metal}. Write its name exactly as the periodic table does.${t>2?' '+peek(m,t-3):''}`); }
+  if(!okR){ if(!vr) fb.push('Type the Roman numeral for the metal\'s charge.'); else if(/^\d+$/.test(vr)) fb.push('Use a Roman numeral (I, II, III, IV, …), not a digit.'); else if(vr.toUpperCase()===r&&vr!==r) fb.push('Roman numerals are written in capital letters.');
+    else fb.push(t>2?`${c.an} is ${c.qa}− and there ${c.fa>1?'are '+c.fa:'is 1'}, so the total negative charge is ${tot}−. The ${c.fc>1?c.fc+' metal ions share':'metal ion has'} ${tot}+. Divide to find one metal ion's charge.`:'Work out the metal\'s charge: find the total negative charge from the nonmetal, then share the same amount of positive charge among the metal ions.'); }
+  if(!okN){ if(!vn) fb.push('Type the nonmetal\'s name with the -ide ending.'); else if(vn===NAMES[c.an].toLowerCase()) fb.push('That is the element\'s name. Drop its ending and add -ide.'); else if(vn===STEM[c.an][0]) fb.push('Almost! Don\'t forget the -ide ending.'); else fb.push(`The nonmetal is ${c.an}. Take its name, drop the ending, and add -ide.${t>2?' '+peek(n,t-3):''}`); }
+  if(!okC){ if(!cv) fb.push('Type the whole compound name.'); else if(okM&&okR&&okN) fb.push('Put the Roman numeral in parentheses right after the metal name with no space, then a space, then the nonmetal name. Roman numerals are capital letters.'); else fb.push('Fix the boxes above first, then combine them into the full name.'); }
+  if(okM&&okR&&okN&&okC){ state.named2[c.key]=true; save(); const tmp=document.createElement('div'); tmp.innerHTML=rcardHTML(c); card.replaceWith(tmp.firstElementChild); updateNamed2(); toast('✓ '+c.disp+' is '+full); return; }
+  const fbEl=card.querySelector('.pfb'); fbEl.className='pfb'; fbEl.innerHTML=fb.map(x=>'• '+x).join('<br>'); }
+
+/* ======================= scroll strip + main loop ======================= */
 (function(){ const strip=$('#scrollstrip'),thumb=$('#scrollthumb'),de=document.documentElement; let drag=null;
   function layout(){ const docH=de.scrollHeight,view=window.innerHeight,track=strip.clientHeight;
     if(docH<=view+4){ strip.style.display='none'; document.body.classList.remove('hasstrip'); return; }
@@ -519,12 +756,10 @@ $('#tab1').onclick=()=>showTab(1); $('#tab2').onclick=()=>showTab(2);
   strip.addEventListener('pointerdown',e=>{ e.preventDefault(); try{strip.setPointerCapture(e.pointerId);}catch(_){} drag=true; strip.classList.add('drag'); to(e.clientY); });
   strip.addEventListener('pointermove',e=>{ if(drag) to(e.clientY); }); const end=()=>{ drag=null; strip.classList.remove('drag'); }; strip.addEventListener('pointerup',end); strip.addEventListener('pointercancel',end);
   window.addEventListener('scroll',layout,{passive:true}); window.addEventListener('resize',layout); setInterval(layout,800); layout(); })();
-
-/* ======================= main loop ======================= */
 let last=performance.now();
-function frame(now){ const dt=Math.min(.05,(now-last)/1000||0); last=now; B.t+=dt; for(const t of B.tiles) if(t.pop>0) t.pop=Math.max(0,t.pop-dt*3.2); drawBench(); requestAnimationFrame(frame); }
-resize(); renderFound(); relink(); refresh(); requestAnimationFrame(frame);
-window.__ion={B,state,N,pick,go,showTab,relink,refresh};
+function frame(now){ const dt=Math.min(.05,(now-last)/1000||0); last=now; BENCHES.forEach(b=>b.frame(dt)); requestAnimationFrame(frame); }
+renderFound(); renderPairs(); renderTabs(); B1.bench.resize(); requestAnimationFrame(frame);
+window.__ion={state,B1,B2,N,IN,RN,ST3,ST5,showTab,M2,mkCmp,renderPairs,renderTabs,go};
 </script>
 </body>
 </html>
