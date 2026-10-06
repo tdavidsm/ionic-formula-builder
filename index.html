@@ -26,7 +26,7 @@
   .pill b{color:var(--accent);font-variant-numeric:tabular-nums}
   .wrap{max-width:1180px;margin:0 auto;padding:12px 14px 30px}
 
-  .tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}
+  .tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px}
   .tab{text-align:left;background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:8px 11px;cursor:pointer;
     color:var(--ink);font:inherit;touch-action:manipulation;min-width:0}
   .tab:hover{border-color:#3a4d7d}
@@ -35,7 +35,7 @@
   .tab .n{font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;font-weight:700;color:var(--accent)}
   .tab.g2 .n{color:var(--rom)}
   .tab .nm{font-weight:700;font-size:14px;margin-top:2px;line-height:1.2}
-  @media (max-width:900px){ .tabs{grid-template-columns:repeat(3,1fr)} }
+  @media (max-width:1000px){ .tabs{grid-template-columns:repeat(3,1fr)} }
   @media (max-width:560px){ .tabs{grid-template-columns:repeat(2,1fr)} .tab .nm{font-size:13px} }
 
   .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px;min-width:0}
@@ -197,6 +197,32 @@
   .pcard .pfb{font-size:13px;line-height:1.45;margin-top:8px;color:var(--accent);min-height:1.4em}
   .pcard .pfb.ok{color:#8ff0b6}
 
+  /* polyatomic ions */
+  .pi-intro{display:grid;grid-template-columns:230px 1fr;gap:16px;align-items:center}
+  @media (max-width:640px){ .pi-intro{grid-template-columns:1fr} }
+  .pi-intro p{margin:0 0 8px;font-size:15px;line-height:1.55}
+  .pi-intro b.c1{color:var(--cat)} .pi-intro b.c2{color:var(--an)}
+  .pi-prompt{background:#0a1024;border:2px solid var(--accent);border-radius:14px;padding:14px;text-align:center;margin-bottom:10px}
+  .pi-prompt .k{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
+  .pi-prompt .v{font-size:clamp(30px,6vw,52px);font-weight:900;color:var(--accent);margin-top:2px;line-height:1.2}
+  .pi-prompt.done{border-color:var(--good)} .pi-prompt.done .v{color:#8ff0b6;font-size:clamp(22px,4vw,32px)}
+  .pi-meters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+  .pi-m{background:#0c1428;border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+  .pi-m .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:700;display:flex;justify-content:space-between}
+  .pi-m .l b{color:var(--accent);font-variant-numeric:tabular-nums}
+  .pi-pips{display:flex;gap:6px;margin-top:6px}
+  .pi-pips i{flex:1;height:10px;border-radius:5px;background:#26335a} .pi-pips i.on{background:var(--good)}
+  .pi-m.ok{border-color:var(--good)}
+  .pi-fb{min-height:2.6em;font-size:14.5px;font-weight:600;line-height:1.4;margin:8px 0;color:var(--accent);text-align:center}
+  .pi-fb.good{color:#8ff0b6} .pi-fb.bad{color:#ff9aa9}
+  .pi-sec{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:700;margin:12px 2px 6px}
+  .pi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .pi{background:#0c1428;border:2px solid var(--line);border-radius:12px;padding:9px 6px;cursor:pointer;color:var(--ink);font:inherit;text-align:center;touch-action:manipulation;transition:transform .08s}
+  .pi:active{transform:scale(.95)} .pi:hover{border-color:#4a5d96}
+  .pi .f{display:block;font-size:22px;font-weight:900} .pi .n{display:block;font-size:13px;color:var(--muted);margin-top:2px;font-weight:600}
+  .pi.cat .f{color:var(--cat)} .pi.an .f{color:var(--an)}
+  .pi.right{border-color:var(--good);background:#143323} .pi.wrong{border-color:var(--bad);background:#3a1620} .pi.reveal{border-color:var(--good);box-shadow:0 0 14px rgba(47,191,87,.55)}
+  .pi.right .n,.pi.reveal .n{color:#bff5d3}
   /* always-visible scroll strip (iPad hides its own scrollbar) */
   #scrollstrip{position:fixed;right:3px;top:8px;bottom:8px;width:18px;background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:9px;z-index:20;touch-action:none;display:none}
   #scrollthumb{position:absolute;left:0;right:0;top:0;min-height:48px;background:var(--accent);opacity:.75;border-radius:9px;touch-action:none}
@@ -305,6 +331,38 @@
       <div class="status" id="all2Named" style="text-align:center;font-size:17px"></div>
     </div>
   </div>
+  <!-- ===== TAB 6: polyatomic ions ===== -->
+  <div id="view6" style="display:none">
+    <div class="card">
+      <h2>What is a polyatomic ion?</h2>
+      <div class="pi-intro">
+        <svg viewBox="0 0 230 160" width="100%" role="img" aria-label="A sulfate ion: one sulfur atom bonded to four oxygen atoms inside a bracket with a 2 minus charge">
+          <g stroke="#8a97c4" stroke-width="3"><line x1="105" y1="80" x2="105" y2="34"/><line x1="105" y1="80" x2="105" y2="126"/><line x1="105" y1="80" x2="59" y2="80"/><line x1="105" y1="80" x2="151" y2="80"/></g>
+          <circle cx="105" cy="80" r="21" fill="#e6c84a"/><text x="105" y="86" text-anchor="middle" font-size="19" font-weight="800" fill="#2a2204">S</text>
+          <g fill="#ff6b6b"><circle cx="105" cy="30" r="16"/><circle cx="105" cy="130" r="16"/><circle cx="55" cy="80" r="16"/><circle cx="155" cy="80" r="16"/></g>
+          <g font-size="15" font-weight="800" fill="#fff" text-anchor="middle"><text x="105" y="36">O</text><text x="105" y="136">O</text><text x="55" y="86">O</text><text x="155" y="86">O</text></g>
+          <path d="M184 8 H196 V152 H184 M26 8 H14 V152 H26" fill="none" stroke="#ffd166" stroke-width="3.5" stroke-linecap="round"/>
+          <text x="214" y="32" text-anchor="middle" font-size="24" font-weight="900" fill="#ffd166">2−</text>
+        </svg>
+        <div>
+          <p>A <b class="c2">polyatomic ion</b> is a <b>group of atoms</b> that are covalently bonded together and carry an <b>overall charge</b>. The sulfate ion, <b>SO₄²⁻</b>, is one sulfur and four oxygens sharing electrons, and the whole group has a 2− charge.</p>
+          <p>In an ionic compound the group acts as <b>one single ion</b>: it moves, bonds and balances charge as a unit. You will need to <b>recognize</b> these ions by name and by formula, so let's practice.</p>
+          <p class="hint">Clues: many names end in <b>-ate</b> or <b>-ite</b> (sulfate has one more oxygen than sulfite). A few end in <b>-ide</b> (hydroxide, cyanide). Ammonium is the common one with a positive charge.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Find the ion: tap it in the table</h2>
+      <div class="pi-prompt" id="piPrompt"></div>
+      <div class="pi-meters">
+        <div class="pi-m" id="piMn"><div class="l"><span>Found from the name</span><b id="piNn">0/5</b></div><div class="pi-pips" id="piPn"></div></div>
+        <div class="pi-m" id="piMf"><div class="l"><span>Found from the formula</span><b id="piNf">0/5</b></div><div class="pi-pips" id="piPf"></div></div>
+      </div>
+      <div class="pi-fb" id="piFb"></div>
+      <div id="piTable"></div>
+      <div class="hint" id="piMiss" style="margin-top:10px;text-align:center"></div>
+    </div>
+  </div>
 </div>
 <div id="scrollstrip"><div id="scrollthumb"></div></div>
 <div class="toast" id="toast"></div>
@@ -350,29 +408,30 @@ const mName=m=>NAMES[m].toLowerCase(), aName=an=>STEM[an][0]+'ide';
 
 /* ======================= saved progress ======================= */
 const KEY='ionicformula.v1';
-let state={found:[],named:{},pairs:[],named2:{},introSeen:false};
+let state={found:[],named:{},pairs:[],named2:{},introSeen:false,poly:{name:[],formula:[],missed:0}};
 try{ const d=JSON.parse(localStorage.getItem(KEY)||'null'); if(d&&Array.isArray(d.found)) state=Object.assign(state,d); }catch(e){}
 const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} };
 let toastT=0;
 function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3800); }
 
 /* ======================= tabs, gating ======================= */
-const TABS=[['Tab 1','Build Formulas',1],['Tab 2','Name Them',1],['Tab 3','Metals with Many Charges',2],['Tab 4','Build Multi-Charge Formulas',2],['Tab 5','Name with Roman Numerals',2]];
+const TABS=[['Tab 1','Build Formulas',1],['Tab 2','Name Them',1],['Tab 3','Metals with Many Charges',2],['Tab 4','Build Multi-Charge Formulas',2],['Tab 5','Name with Roman Numerals',2],['Tab 6','Polyatomic Ions',2]];
 const namedCount=()=>state.found.filter(f=>state.named[f.key]).length;
 function lockReason(n){
   if(n===2&&state.found.length<6) return `Find six formulas in Tab 1 first (${state.found.length}/6).`;
   if(n===3&&!(state.found.length>=6&&namedCount()>=state.found.length)) return 'Name every compound you found in Tab 2 first.';
   if(n===4&&!state.introSeen) return 'Finish the animation in Tab 3 first.';
   if(n===5&&state.pairs.length<3) return `Complete three pairs of compounds in Tab 4 first (${state.pairs.length}/3).`;
+  if(n===6&&!(state.pairs.length>=3&&state.pairs.flatMap(p=>p.items).every(c=>state.named2[c.key]))) return 'Name every compound in Tab 5 first.';
   return ''; }
 let curTab=1;
 function renderTabs(){ $('#tabs').innerHTML=TABS.map((t,i)=>{ const n=i+1,lock=lockReason(n); return `<button class="tab ${t[2]===2?'g2':''} ${n===curTab?'sel':''} ${lock?'locked':''}" data-n="${n}"><div class="n">${t[0]}</div><div class="nm">${lock?'🔒 ':''}${t[1]}</div></button>`; }).join('');
   document.querySelectorAll('#tabs .tab').forEach(b=>b.onclick=()=>showTab(+b.dataset.n));
-  $('#pill').innerHTML=`Formulas <b>${Math.min(6,state.found.length)}/6</b> &nbsp;·&nbsp; Pairs <b>${Math.min(3,state.pairs.length)}/3</b>`; }
+  $('#pill').innerHTML=`Formulas <b>${Math.min(6,state.found.length)}/6</b> &nbsp;·&nbsp; Pairs <b>${Math.min(3,state.pairs.length)}/3</b> &nbsp;·&nbsp; Ions <b>${Math.min(5,PSt().name.length)+Math.min(5,PSt().formula.length)}/10</b>`; }
 function showTab(n){ const r=lockReason(n); if(r){ toast(r); return; } curTab=n;
-  for(let i=1;i<=5;i++) $('#view'+i).style.display=i===n?'':'none';
+  for(let i=1;i<=6;i++) $('#view'+i).style.display=i===n?'':'none';
   stopAllPlay(); renderTabs(); window.scrollTo(0,0);
-  if(n===1) B1.bench.resize(); if(n===2) showNaming(); if(n===3) showIntro(); if(n===4) B2.bench.resize(); if(n===5) showRoman(); }
+  if(n===1) B1.bench.resize(); if(n===2) showNaming(); if(n===3) showIntro(); if(n===4) B2.bench.resize(); if(n===5) showRoman(); if(n===6) showPoly(); }
 
 /* ======================= periodic table ======================= */
 function buildTable(root,mode){
@@ -746,6 +805,37 @@ function checkRoman(card){ const c=state.pairs.flatMap(p=>p.items).find(x=>x.key
   if(!okC){ if(!cv) fb.push('Type the whole compound name.'); else if(okM&&okR&&okN) fb.push('Put the Roman numeral in parentheses right after the metal name with no space, then a space, then the nonmetal name. Roman numerals are capital letters.'); else fb.push('Fix the boxes above first, then combine them into the full name.'); }
   if(okM&&okR&&okN&&okC){ state.named2[c.key]=true; save(); const tmp=document.createElement('div'); tmp.innerHTML=rcardHTML(c); card.replaceWith(tmp.firstElementChild); updateNamed2(); toast('✓ '+c.disp+' is '+full); return; }
   const fbEl=card.querySelector('.pfb'); fbEl.className='pfb'; fbEl.innerHTML=fb.map(x=>'• '+x).join('<br>'); }
+
+/* ======================= TAB 6: polyatomic ions ======================= */
+const POLY=[
+  {f:'NH₄⁺',n:'ammonium',g:'cat'},
+  {f:'OH⁻',n:'hydroxide',g:'an'},{f:'CN⁻',n:'cyanide',g:'an'},{f:'NO₃⁻',n:'nitrate',g:'an'},{f:'NO₂⁻',n:'nitrite',g:'an'},{f:'C₂H₃O₂⁻',n:'acetate',g:'an'},
+  {f:'HCO₃⁻',n:'hydrogen carbonate',g:'an'},{f:'ClO₃⁻',n:'chlorate',g:'an'},{f:'ClO₄⁻',n:'perchlorate',g:'an'},{f:'MnO₄⁻',n:'permanganate',g:'an'},
+  {f:'SO₄²⁻',n:'sulfate',g:'an'},{f:'SO₃²⁻',n:'sulfite',g:'an'},{f:'CO₃²⁻',n:'carbonate',g:'an'},{f:'CrO₄²⁻',n:'chromate',g:'an'},{f:'Cr₂O₇²⁻',n:'dichromate',g:'an'},
+  {f:'PO₄³⁻',n:'phosphate',g:'an'},{f:'PO₃³⁻',n:'phosphite',g:'an'}];
+const POLY_SECTIONS=[['1+ charge',['NH₄⁺']],['1− charge',['OH⁻','CN⁻','NO₃⁻','NO₂⁻','C₂H₃O₂⁻','HCO₃⁻','ClO₃⁻','ClO₄⁻','MnO₄⁻']],['2− charge',['SO₄²⁻','SO₃²⁻','CO₃²⁻','CrO₄²⁻','Cr₂O₇²⁻']],['3− charge',['PO₄³⁻','PO₃³⁻']]];
+const PSt=()=>{ state.poly=state.poly||{name:[],formula:[],missed:0}; return state.poly; };
+const PQ={mode:null,target:null,locked:false,last:-1,tm:null};
+const polyDone=()=>PSt().name.length>=5&&PSt().formula.length>=5;
+function renderPolyTable(){ $('#piTable').innerHTML=POLY_SECTIONS.map(([t,fs])=>`<div class="pi-sec">${t}</div><div class="pi-grid">${fs.map(f=>{ const i=POLY.findIndex(x=>x.f===f),x=POLY[i]; return `<button class="pi ${x.g}" data-i="${i}"><span class="f">${x.f}</span><span class="n">${x.n}</span></button>`; }).join('')}</div>`).join('');
+  $('#piTable').querySelectorAll('.pi').forEach(b=>b.onclick=()=>polyTap(+b.dataset.i,b)); }
+function polyMeters(){ const p=PSt(); [['n','name'],['f','formula']].forEach(([k,m])=>{ const n=Math.min(5,p[m].length); $('#piN'+k).textContent=n+'/5'; $('#piM'+k).classList.toggle('ok',n>=5);
+    $('#piP'+k).innerHTML=Array.from({length:5},(_,i)=>`<i class="${i<n?'on':''}"></i>`).join(''); });
+  $('#piMiss').textContent=p.missed?`Misses so far: ${p.missed}. Misses don't count against you, so keep going.`:'You can miss some along the way. Only correct answers count.'; renderTabs(); }
+function polyPrompt(){ const el=$('#piPrompt'),x=POLY[PQ.target];
+  if(polyDone()){ el.className='pi-prompt done'; el.innerHTML='<div class="v">🎉 Page complete! You found 5 ions from their names and 5 from their formulas.</div>'; return; }
+  el.className='pi-prompt'; el.innerHTML=PQ.mode==='name'?`<div class="k">Tap the ion named</div><div class="v">${x.n}</div>`:`<div class="k">Tap the ion with the formula</div><div class="v">${x.f}</div>`; }
+function nextPoly(){ clearTimeout(PQ.tm); document.querySelectorAll('#piTable .pi').forEach(b=>b.classList.remove('right','wrong','reveal')); const p=PSt(),need=[];
+  if(p.name.length<5) need.push('name'); if(p.formula.length<5) need.push('formula');
+  if(!need.length){ PQ.locked=true; polyPrompt(); return; }
+  PQ.mode=need[Math.floor(Math.random()*need.length)]; let pool=POLY.map((_,i)=>i).filter(i=>!p[PQ.mode].includes(i)&&i!==PQ.last); if(!pool.length) pool=POLY.map((_,i)=>i).filter(i=>!p[PQ.mode].includes(i));
+  PQ.target=pool[Math.floor(Math.random()*pool.length)]; PQ.last=PQ.target; PQ.locked=false; $('#piFb').className='pi-fb'; $('#piFb').textContent='Find it in the table and tap it.'; polyPrompt(); }
+function polyTap(i,btn){ if(PQ.locked) return; const p=PSt(),x=POLY[PQ.target]; PQ.locked=true;
+  if(i===PQ.target){ p[PQ.mode].push(i); save(); btn.classList.add('right'); $('#piFb').className='pi-fb good'; $('#piFb').textContent=`✓ Correct! ${x.f} is ${x.n}.`; polyMeters();
+    if(polyDone()){ PQ.tm=setTimeout(()=>{ polyPrompt(); },900); toast('🎉 Polyatomic ions page complete!'); } else PQ.tm=setTimeout(nextPoly,1100); }
+  else{ p.missed++; save(); btn.classList.add('wrong'); const t=document.querySelector(`#piTable .pi[data-i="${PQ.target}"]`); t.classList.add('reveal'); const y=POLY[i];
+    $('#piFb').className='pi-fb bad'; $('#piFb').textContent=`Not quite. That one is ${y.f}, ${y.n}. The answer was ${x.f}, ${x.n}. Here comes a new one.`; polyMeters(); PQ.tm=setTimeout(nextPoly,2800); } }
+function showPoly(){ renderPolyTable(); polyMeters(); nextPoly(); }
 
 /* ======================= scroll strip + main loop ======================= */
 (function(){ const strip=$('#scrollstrip'),thumb=$('#scrollthumb'),de=document.documentElement; let drag=null;

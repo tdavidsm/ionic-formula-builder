@@ -40,10 +40,15 @@ Same periodic table and jigsaw workshop as Tab 1, but limited to the metals with
 
 **Part 2:** every compound in the student's pairs gets a card with **Metal Name**, **Roman Numeral**, **Nonmetal Name**, and **Compound Name** boxes. Check gives targeted hints (digit instead of a Roman numeral, lowercase numeral, wrong charge, the total-charge arithmetic after a few tries).
 
+## Tab 6: Polyatomic Ions
+An intro card shows what a polyatomic ion is (a covalently bonded group of atoms with one overall charge, drawn as sulfate in a bracket) and gives naming clues (-ate/-ite, a few -ide). Below it, a table of 17 common polyatomic ions is grouped by charge (1+, 1−, 2−, 3−), each showing its formula and name.
+
+The student is asked, one at a time, either to **tap the ion with a given name** or **tap the ion with a given formula**. They need **5 correct from names and 5 correct from formulas**. A wrong tap does not count, shows what they tapped and the right answer, and moves on to a new question. There is no restart, and misses are only tallied for information. Progress is saved on the device.
+
 ## Notes
 - Progress (the discovered formulas) is saved on the device.
 - Tabs 1–2 offer only single-charge ions, so every name follows "metal + nonmetal stem + -ide". Tabs 3–5 add the multi-charge metals and Roman numerals.
-- Tabs unlock in order: 2 after six formulas, 3 after naming them all, 4 after the Tab 3 animation, 5 after three pairs.
+- Tabs unlock in order: 2 after six formulas, 3 after naming them all, 4 after the Tab 3 animation, 5 after three pairs, 6 after naming every compound in Tab 5.
 
 ## Tech
 Single self-contained `index.html`: plain HTML/CSS/JS with a canvas workshop and Pointer Events (touch + mouse); no dependencies. Built for iPad Safari. Deployed via GitHub Pages from `main`.
